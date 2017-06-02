@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Particle Photon</title>
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<!-- jQuery library -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<!-- Latest compiled JavaScript -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<script src="photonScript.js"></script>
+	</head>
+	<body>
+		<nav class="navbar navbar-inverse">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="lightsControl.html">Particle Photon</a>
+				</div>
+				<div class="collapse navbar-collapse" id="myNavbar">
+					<ul class="nav navbar-nav">
+						<li class="active"><a href="lightsControl.html">Lights</a></li>
+						<li><a href="alarmControl.html">Alarm</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+		
+		<div class="container text-center">
+			<h2>Lights</h2><br><br>
+			<div class="row">
+				<div class="col-sm-6">
+					<h3>Exterior</h3><br>
+					<div class="container text-center">
+						<div class="col-sm-3">
+							<button type="button" class="btn btn-primary" id="turnOn" onclick="turnLedOn()">On</button>
+						</div>
+						<div class="col-sm-3">
+							<button type="button" class="btn btn-primary" id="turnOff" onclick="turnLedOff()">Off</button>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-6">
+					<h3>Interior</h3><br>
+					<div class="container text-center">
+						<div class="col-sm-3">
+							<button type="button" class="btn btn-primary" id="turnOn" onclick="turnLedOn()">On</button>
+						</div>
+						<div class="col-sm-3">
+							<button type="button" class="btn btn-primary" id="turnOff" onclick="turnLedOff()">Off</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div><br>
+	</body>
+</html>
