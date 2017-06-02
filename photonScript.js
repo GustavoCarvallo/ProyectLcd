@@ -17,11 +17,27 @@ $.ajax({
 });
 }
 
-function turnLedOn(){
-	var func = "TurnLed";
-	postToServer(func, "ON");	
+function turnOutdoorsLightsOn(){
+	var func = "dicroica";
+	postToServer(func, "OUTDOORS-TURNON");	
 }
-function turnLedOff(){
-	var func = "TurnLed";
-	postToServer(func, "OFF");
+function turnOutdoorsLightsOff(){
+	var func = "dicroica";
+	postToServer(func, "OUTDOORS-TURNOFF");
+}
+function turnIndoorsLightsOn(){
+	var func = "dicroica";
+	postToServer(func, "INDOORS-TURNON");
+}
+function turnIndoorsLightsOff(){
+	var func = "dicroica";
+	postToServer(func, "INDOORS-TURNOFF");
+}
+function changeOutdoorsLightsIntensity(){
+	var func = "dicroica";
+	postToServer(func, "OUTDOORS-SETINTENSITY-5");
+}
+function changeIndoorsLightsIntensity(){
+	var func = "dicroica";
+	postToServer(func, "INDOORS-SETINTENSITY-5");
 }
