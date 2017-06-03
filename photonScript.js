@@ -1,8 +1,8 @@
 var led_on = false;
 
 function postToServer(func, argument){
-//var postUrl = 'https://api.particle.io/v1/devices/28002d000647343339373536/' + func + '?access_token=2b28691b3f97329e5ef8385402bcb972a6d6f592';
-var postUrl = 'http://192.168.2.2:8080/v1/devices/28002d000647343339373536/' + func + '?access_token=5eefa91a0205cf41e2a132cb0dd7a77d32f390bf';
+var postUrl = 'http://localhost:8080/v1/devices/28002d000647343339373536/' + func + '?access_token=fa9ceffbb279f591305221e3ba8f0273a46083cf';
+//var postUrl = 'http://192.168.2.3:8080/v1/devices/28002d000647343339373536/' + func + '?access_token=5eefa91a0205cf41e2a132cb0dd7a77d32f390bf';
 $.ajax({
 	url: postUrl,
 	type: 'post',
@@ -40,4 +40,12 @@ function changeOutdoorsLightsIntensity(){
 function changeIndoorsLightsIntensity(){
 	var func = "dicroica";
 	postToServer(func, "INDOORS-SETINTENSITY-5");
+}
+function enableLightSensor(){
+	var func = "setValues";
+	postToServer(func, "ENABLELIGHTSENSOR-TRUE");
+}
+function disableLightSensor(){
+	var func = "setValues";
+	postToServer(func, "ENABLELIGHTSENSOR-FALSE");
 }
