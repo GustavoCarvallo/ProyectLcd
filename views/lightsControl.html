@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<title>Particle Photon</title>
+	<!-- jQuery library -->
+	<script src="../public/js/external/jquery/jquery-3.2.1.min.js"></script>
+	<!-- Compiled and minified Materialize JavaScript -->
+	<script src="../public/js/external/materialize/materialize.min.js"></script>
+	<!-- Photon Script -->
+	<script src="../public/js/photonScript.js"></script>
+	<!-- Compiled and minified Materialize CSS -->
+	<link rel="stylesheet" href="../public/css/materialize.min.css">
+</head>
+<body onload="loadAllButtonsLights()">
+	<nav>
+		<div class="nav-wrapper red lighten-2">
+			<a href="../index.html" class="brand-logo">Particle Photon</a>
+			<ul id="nav-mobile" class="right hide-on-med-and-down">
+				<li class="active"><a href="lightsControl.html">Lights</a></li>
+				<li><a href="alarmControl.html">Alarm</a></li>
+			</ul>
+		</div>
+	</nav>
+
+	<div class="container text-center">
+		<!-- Labels Lights-->
+		<div class="row">
+			<div class="col m12">
+				<h3 class="center-align">Lights</h3>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col m6">
+				<h4 class="center-align">Outdoors</h4>
+			</div>
+			<div class="col m6">
+				<h4 class="center-align">Indoors</h4>
+			</div>
+	  </div>
+
+		<!-- Buttons Lights-->
+		<div class="row">
+			<div class="col m6 center-align">
+				<button type="button" class="btn-large waves-effect waves-light" id="turnOutdoorsOn" onclick="turnOutdoorsLightsOn()">On</button>
+				<button type="button" class="btn-large waves-effect waves-light" id="turnOutdoorsOff" onclick="turnOutdoorsLightsOff()">Off</button>
+			</div>
+			<div class="col m6 center-align">
+				<button type="button" class="btn-large waves-effect waves-light" id="turnIndoorsOn" onclick="turnIndoorsLightsOn()">On</button>
+				<button type="button" class="btn-large waves-effect waves-light" id="turnIndoorsOff" onclick="turnIndoorsLightsOff()">Off</button>
+			</div>
+		</div>
+
+		<!-- Lights Slider Labels-->
+		<div class="row">
+			<div class="col m6 center-align">
+				<h5>Intensity</h5>
+			</div>
+			<div class="col m6 center-align">
+				<h5>Intensity</h5>
+			</div>
+		</div>
+
+		<!-- Testing porpuse -->
+		<!-- <div class="row">
+			<button type="button" class="btn-large waves-effect waves-light"  onclick="testing()">Test</button>
+		</div> -->
+
+		<!-- Lights Sliders-->
+		<div class="row">
+			<div class="col m6 center-align">
+				<form>
+					<p class="range-field">
+						<input id="outdoorIntensity" type="range" min="0" max="9" onchange="changeOutdoorsLightsIntensity()">
+					</p>
+				</form>
+			</div>
+			<div class="col m6 center-align">
+				<form>
+					<p class="range-field">
+						<input id="indoorIntensity" type="range" min="0" max="9" onchange="changeIndoorsLightsIntensity()">
+					</p>
+				</form>
+			</div>
+
+		</div>
+
+		<!-- Label Light Sensor-->
+		<div class="row">
+			<div class="col m12">
+				<h3 class="center-align">Light Sensor</h3>
+			</div>
+		</div>
+
+		<!-- Buttons Light Sensor -->
+		<div class="row">
+			<div class="col m12 center-align">
+				<button type="button" class="btn-large waves-effect waves-light" id="enableLightSensor" onclick="enableLightSensor()">Enable</button>
+				<button type="button" class="btn-large waves-effect waves-light" id="disableLightSensor" onclick="disableLightSensor()">Disable</button>
+			</div>
+		</div>
+
+		<!-- Label Movemment Sensor-->
+		<div class="row">
+			<div class="col m12">
+				<h3 class="center-align">Movemment Sensor</h3>
+			</div>
+		</div>
+
+		<!-- Buttons Movemment Sensor -->
+		<div class="row">
+			<div class="col m12 center-align">
+				<button type="button" class="btn-large waves-effect waves-light" id="enableMovemmentSensor" onclick="enableMovemmentSensor()">Enable</button>
+				<button type="button" class="btn-large waves-effect waves-light" id="disableMovemmentSensor" onclick="disableMovemmentSensor()">Disable</button>
+			</div>
+		</div>
+
+	</div>
+</body>
+
+</html>

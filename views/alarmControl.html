@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Particle Photon</title>
+  <!-- jQuery library -->
+	<script src="../public/js/external/jquery/jquery-3.2.1.min.js"></script>
+	<!-- Compiled and minified Materialize JavaScript -->
+	<script src="../public/js/external/materialize/materialize.min.js"></script>
+	<!-- Photon Script -->
+	<script src="../public/js/photonScript.js"></script>
+	<!-- Compiled and minified Materialize CSS -->
+	<link rel="stylesheet" href="../public/css/materialize.min.css">
+</head>
+
+<body onload="loadAllButtonsAlarm()">
+<!-- <body> -->
+  <!-- Nav bar -->
+  <nav>
+		<div class="nav-wrapper red lighten-2">
+			<a href="../index.html" class="brand-logo">Particle Photon</a>
+			<ul id="nav-mobile" class="right hide-on-med-and-down">
+				<li><a href="lightsControl.html">Lights</a></li>
+				<li class="active"><a href="alarmControl.html">Alarm</a></li>
+			</ul>
+		</div>
+	</nav>
+
+  <div class="container text-center">
+    <!-- Label -->
+    <div class="row">
+      <div class="col m12 center-align">
+        <h3>Alarm</h3>
+      </div>
+    </div>
+
+    <!-- Buttons -->
+    <div class="row">
+      <div class="col m12 center-align">
+        <button type="button" class="btn-large waves-effect waves-light" id="activateAlarmBtn"  onclick="showPasswordFieldToActivate()">Activate</button>
+        <button type="button" class="btn-large waves-effect waves-light" id="desactivateAlarmBtn" onclick="showPasswordFieldToDesactivate()">Deactivate</button>
+        <!-- <button type="button" class="btn-large waves-effect waves-light">Status</button> -->
+      </div>
+    </div>
+
+    <!-- Empty row, view porpuse -->
+    <div class="row"></div>
+
+    <div id="passwordFieldToActivate" class="row" hidden="hidden">
+      <div class="input-field col m4 offset-m4">
+        <!-- <i class="material-icons prefix">account_circle</i> -->
+        <input id="inputPasswordActivate" type="password">
+        <label for="inputPassword">Password</label>
+      </div>
+      <div class="col m2">
+        <button type="button" class="btn-large waves-effect waves-light" onclick="activateAlarm()" >Activate</button>
+      </div>
+    </div>
+
+    <div id="passwordFieldToDesactivate" class="row" hidden="hidden">
+      <div class="input-field col m4 offset-m4">
+        <!-- <i class="material-icons prefix">account_circle</i> -->
+        <input id="inputPasswordDesactivate" type="password">
+        <label for="inputPassword">Password</label>
+      </div>
+      <div class="col m2">
+        <button type="button" class="btn-large waves-effect waves-light" onclick="desactivateAlarm()">Desactivate</button>
+      </div>
+    </div>
+
+
+  </div>
+
+</body>
+
+</html>
