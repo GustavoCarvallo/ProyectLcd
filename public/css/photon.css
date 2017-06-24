@@ -1,0 +1,12 @@
+#alarmNotTriggerInfo{
+  background-color: lightgreen;
+}
+#alarmTriggerInfo{
+  background-color: #ff9999;
+}
+#alarmNotTriggerText{
+  color: white  ;
+}
+#alarmTriggerText{
+  color: black;
+}

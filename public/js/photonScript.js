@@ -265,7 +265,7 @@ function activateAlarm(){
         document.getElementById("desactivateAlarmBtn").disabled = false;
         document.getElementById("inputPasswordActivate").value = "";
         document.getElementById("passwordFieldToActivate").hidden = true;
-
+        document.getElementById("checkStatusBtnContainer").hidden = false;
       }
       else if (response.return_value == -2) {
         Materialize.toast("Wrong Password", 3000, 'red');
@@ -294,6 +294,7 @@ function desactivateAlarm(){
         document.getElementById("desactivateAlarmBtn").disabled = true;
         document.getElementById("inputPasswordDesactivate").value = "";
         document.getElementById("passwordFieldToDesactivate").hidden = true;
+        document.getElementById("checkStatusBtnContainer").hidden = true;
       }
       else if (response.return_value == -3) {
         Materialize.toast("Wrong Password", 3000, 'red');
@@ -307,6 +308,32 @@ function desactivateAlarm(){
       Materialize.toast("An error occurred, please try later.", 5000);
   });
 
+}
+
+function checkStatus(){
+
+  getFromServer("alarmTrigger")
+  .then(function(response){
+      console.log("server response: " + response.result);
+      if (response.result == true) {
+        //console.log("enter!");
+        //document.getElementById("triggerInfo").hidden = false;
+        //document.getElementById("alarmTriggerInfo").hidden = false;
+        var $toastContent = $('<h4> Alarm was trigger</h4>');
+        Materialize.toast($toastContent, 3000, 'green');
+      }
+      else {
+        console.log("enter!");
+        //document.getElementById("triggerInfo").hidden = false;
+        //document.getElementById("alarmTriggerInfo").hidden = true;
+        var $toastContent = $('<h4> Alarm was not trigger</h4>');
+        Materialize.toast($toastContent, 3000, 'red');
+      }
+  })
+  .catch(function(error){
+      //Materialize.toast("An error occurred on the server, please try later.", 5000);
+      console.log(error);
+  });
 }
 
 // function testing(){
@@ -421,7 +448,6 @@ function loadAllButtonsLights(){
 // This function is used to load all the current buttons states (active or
 // disabled) of the alarm page.
 function loadAllButtonsAlarm(){
-
   // Load the buttons related with the alarm.
   getFromServer("alarmActive")
   .then(function(response){
@@ -429,10 +455,12 @@ function loadAllButtonsAlarm(){
       if(response.result == true){
         document.getElementById("activateAlarmBtn").disabled = true;
         document.getElementById("desactivateAlarmBtn").disabled = false;
+        document.getElementById("checkStatusBtnContainer").hidden = false;
       }
       else{
         document.getElementById("activateAlarmBtn").disabled = false;
         document.getElementById("desactivateAlarmBtn").disabled = true;
+        document.getElementById("checkStatusBtnContainer").hidden = true;
       }
   })
   .catch(function(error){

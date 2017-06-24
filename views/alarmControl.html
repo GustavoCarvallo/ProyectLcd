@@ -12,6 +12,8 @@
 	<script src="../public/js/photonScript.js"></script>
 	<!-- Compiled and minified Materialize CSS -->
 	<link rel="stylesheet" href="../public/css/materialize.min.css">
+  <!-- Photon CSS -->
+	<link rel="stylesheet" href="../public/css/photon.css">
 </head>
 
 <body onload="loadAllButtonsAlarm()">
@@ -43,6 +45,22 @@
         <!-- <button type="button" class="btn-large waves-effect waves-light">Status</button> -->
       </div>
     </div>
+
+    <!-- Check status button -->
+    <div id="checkStatusBtnContainer" class="row">
+      <div class="col m12 center-align">
+        <button type="button" class="btn-large waves-effect waves-light" id="checkStatusBtn" onclick="checkStatus()">Check status</button>
+      </div>
+    </div>
+
+    <!-- <div id="triggerInfo" class="row" hidden="hidden">
+      <div id="alarmNotTriggerInfo" class="col m6 offset-m3">
+        <h4 id="alarmNotTriggerText">The alarm was not trigger</h4>
+      </div>
+      <div id="alarmTriggerInfo" class="col m6 offset-m3">
+        <h4 id="alarmTriggerText">The alarm was trigger</h4>
+      </div>
+    </div> -->
 
     <!-- Empty row, view porpuse -->
     <div class="row"></div>
