@@ -1,0 +1,4 @@
+//Commands for asking for a variable.
+curl http://localhost:8080/v1/devices/2f0046000547343233323032/VARNAME?access_token=3f902ab40e940991ae3e3763b00aeb0417b99114
+//Commands for asking for a function.
+curl http://localhost:8080/v1/devices/2f0046000547343233323032/FUNCTIONNAME \-d access_token=3f902ab40e940991ae3e3763b00aeb0417b99114 \-d "args=ARGS"
