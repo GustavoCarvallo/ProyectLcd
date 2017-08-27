@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Particle Photon</title>
+  <!-- jQuery library -->
+	<script src="../public/js/external/jquery/jquery-3.2.1.min.js"></script>
+	<!-- Compiled and minified Materialize JavaScript -->
+	<script src="../public/js/external/materialize/materialize.min.js"></script>
+	<!-- Photon Script -->
+	<script src="../public/js/photonScript.js"></script>
+	<!-- Compiled and minified Materialize CSS -->
+	<link rel="stylesheet" href="../public/css/materialize.min.css">
+  <!-- Photon CSS -->
+	<link rel="stylesheet" href="../public/css/photon.css">
+</head>
+
+<body onload="checkTemperature()">
+<!-- <body> -->
+  <!-- Nav bar -->
+  <nav>
+		<div class="nav-wrapper red lighten-2">
+			<a href="../index.html" class="brand-logo">Particle Photon</a>
+			<ul id="nav-mobile" class="right hide-on-med-and-down">
+				<li><a href="lightsControl.html">Lights</a></li>
+				<li><a href="alarmControl.html">Alarm</a></li>
+        <li class="active"><a href="climateControl.html">Climate</a></li>
+			</ul>
+		</div>
+	</nav>
+
+  <div class="container text-center">
+    <!-- Label -->
+    <div class="row">
+      <div class="col m12 center-align">
+        <h3>Climate Control</h3>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col m2 l2">
+        <h4>Temperature:</h4>
+      </div>
+      <div class="col m2 l2 offset-m1 offset-l1">
+        <h4 id="temperatureVal"></h4>
+      </div>
+      <div class="col m2 l2">
+        <button type="button" class="btn-large waves-effect waves-light" onclick="checkTemperature()">Check</button>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col m6 l6 center align">
+        <h4>Heat</h4>
+      </div>
+      <div class="col m6 l6 center align">
+        <h4>Cool</h4>
+      </div>
+    </div>
+
+    <!-- Buttons -->
+    <div class="row">
+      <div class="col m6 l6 center align">
+        <button type="button" class="btn-large waves-effect waves-light" onclick="turnOnHeat()">Turn On</button>
+        <button type="button" class="btn-large waves-effect waves-light" onclick="turnOffHeat()">Turn Off</button>
+      </div>
+      <div class="col m6 l6 center align">
+        <button type="button" class="btn-large waves-effect waves-light" onclick="turnOnCool()">Turn On</button>
+        <button type="button" class="btn-large waves-effect waves-light" onclick="turnOffCool()">Turn Off</button>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col m12 l12 center align">
+        <h4>Auto</h4>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="input-field col m4 l4 offset-m4 offset-l4">
+        <input type="number" min="19" max="30" id="inputTemp">
+        <label for="inputTemp">Temperature (°C)</label>
+      </div>
+      <div class="col m2 l2">
+        <button type="button" class="btn-large waves-effect waves-light" onclick="setAutoClimate()">Set</button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

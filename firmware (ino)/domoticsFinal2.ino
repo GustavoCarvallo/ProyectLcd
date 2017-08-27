@@ -119,8 +119,6 @@ void loop() {
     checkAlarmActivationOrDesactivation();
     checkExteriorLightIntensity();
     checkAlarm();
-
-    //TO TEST!
     checkTempAndHum();
 }
 
@@ -339,7 +337,7 @@ void checkAlarm(){
 }
 
 void checkTempAndHum(){
-    temperature = dht.getTempFarenheit();
+    temperature = dht.getTempCelcius();
     humidity = dht.getHumidity();
 }
 
@@ -382,7 +380,7 @@ int getVar(String var){
   else if(var == "lightsUsedByPr"){
     return lightsUsedByPr;
   }
-  else return -1;
+  else return -100;
 }
 
 void modifyFrequency(){

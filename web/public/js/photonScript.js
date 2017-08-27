@@ -311,7 +311,6 @@ function desactivateAlarm(){
 }
 
 function checkStatus(){
-
   getVar("alarmTrigger").then(function(result){
     var alarmTrigger = result;
     if(alarmTrigger >= 0){
@@ -471,6 +470,44 @@ function loadAllButtonsAlarm(){
     Materialize.toast("An error occurred on the server, please try later.", 5000);
   });
 }
+
+//This function checks the current temperature.
+function checkTemperature() {
+  getVar("temperature").then(function(result){
+    var temperature = result;
+    if(temperature != -100){ //-100 is an error code.
+      var content = "<h4>" + temperature + "°C</h4>"
+      document.getElementById("temperatureVal").innerHTML = content;
+    }
+    else {
+      console.log("Wrong command when asking for a var at getVar()");
+      Materialize.toast("An error occurred on the server, please try later.", 5000);
+    }
+  }, function(error){
+    Materialize.toast("An error occurred on the server, please try later.", 5000);
+  });
+}
+
+function turnOnHeat() {
+  //TO IMPLEMENT!
+}
+
+function turnOffHeat() {
+  //TO IMPLEMENT!
+}
+
+function turnOnCool() {
+  //TO IMPLEMENT!
+}
+
+function turnOffCool() {
+  //TO IMPLEMENT!
+}
+
+function setAutoClimate() {
+  //TO IMPLEMENT!
+}
+
 //This function returns a var from the server.
 function getVar(varName){
   var func = "getVar";
