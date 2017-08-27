@@ -67,16 +67,16 @@ function getFromServer(variableName){
   return response;
 }
 
-function turnOutdoorsLightsOn() {
-  var func = "dicroica";
-  postToServer(func, "OUTDOORS-TURNON")
+function turnOnLight1() {
+  var func = "light";
+  postToServer(func, "LIGHT-1-TURNON")
   .then(function(response){
       console.log("server response: " + response.return_value);
-      if(response.return_value == 2){
-        loadAllButtonsLights();
+      if(response.return_value == -1){
+        Materialize.toast("An error occurred, please try later.", 5000);
       }
       else{
-        Materialize.toast("An error occurred, please try later.", 5000);
+        loadAllButtonsLights();
       }
   })
   .catch(function(error){
@@ -84,16 +84,16 @@ function turnOutdoorsLightsOn() {
   });
 }
 
-function turnOutdoorsLightsOff() {
-  var func = "dicroica";
-  postToServer(func, "OUTDOORS-TURNOFF")
+function turnOffLight1() {
+  var func = "light";
+  postToServer(func, "LIGHT-1-TURNOFF")
   .then(function(response){
       console.log("server response: " + response.return_value);
-      if(response.return_value == 1){
-        loadAllButtonsLights();
+      if(response.return_value == -1){
+        Materialize.toast("An error occurred, please try later.", 5000);
       }
       else{
-        Materialize.toast("An error occurred, please try later.", 5000);
+        loadAllButtonsLights();
       }
   })
   .catch(function(error){
@@ -101,16 +101,16 @@ function turnOutdoorsLightsOff() {
   });
 }
 
-function turnIndoorsLightsOn() {
-  var func = "dicroica";
-  postToServer(func, "INDOORS-TURNON")
+function turnOnLight2() {
+  var func = "light";
+  postToServer(func, "LIGHT-2-TURNON")
   .then(function(response){
       console.log("server response: " + response.return_value);
-      if(response.return_value == 5){
-        loadAllButtonsLights();
+      if(response.return_value == -1){
+        Materialize.toast("An error occurred, please try later.", 5000);
       }
       else{
-        Materialize.toast("An error occurred, please try later.", 5000);
+        loadAllButtonsLights();
       }
   })
   .catch(function(error){
@@ -118,16 +118,16 @@ function turnIndoorsLightsOn() {
   });
 }
 
-function turnIndoorsLightsOff() {
-  var func = "dicroica";
-  postToServer(func, "INDOORS-TURNOFF")
+function turnOffLight2() {
+  var func = "light";
+  postToServer(func, "LIGHT-2-TURNOFF")
   .then(function(response){
       console.log("server response: " + response.return_value);
-      if(response.return_value == 4){
-        loadAllButtonsLights();
+      if(response.return_value == -1){
+        Materialize.toast("An error occurred, please try later.", 5000);
       }
       else{
-        Materialize.toast("An error occurred, please try later.", 5000);
+        loadAllButtonsLights();
       }
   })
   .catch(function(error){
@@ -135,17 +135,17 @@ function turnIndoorsLightsOff() {
   });
 }
 
-function changeOutdoorsLightsIntensity() {
-  var func = "dicroica";
-  var intensity = document.getElementById("outdoorIntensity").value;
-  postToServer(func, "OUTDOORS-SETINTENSITY-" + intensity)
+function changeLight1Intensity() {
+  var func = "light";
+  var intensity = document.getElementById("light1Intensity").value;
+  postToServer(func, "LIGHT-1-SETINTENSITY-" + intensity)
   .then(function(response){
       console.log("server response: " + response.return_value);
-      if(response.return_value == 3){
-        loadAllButtonsLights();
+      if(response.return_value == -1){
+        Materialize.toast("An error occurred, please try later.", 5000);
       }
       else{
-        Materialize.toast("An error occurred, please try later.", 5000);
+        loadAllButtonsLights();
       }
   })
   .catch(function(error){
@@ -153,17 +153,17 @@ function changeOutdoorsLightsIntensity() {
   });
 }
 
-function changeIndoorsLightsIntensity() {
-  var func = "dicroica";
-  var intensity = document.getElementById("indoorIntensity").value;
-  postToServer(func, "INDOORS-SETINTENSITY-" + intensity)
+function changeLight2Intensity() {
+  var func = "light";
+  var intensity = document.getElementById("light2Intensity").value;
+  postToServer(func, "LIGHT-2-SETINTENSITY-" + intensity)
   .then(function(response){
       console.log("server response: " + response.return_value);
-      if(response.return_value == 6){
-        loadAllButtonsLights();
+      if(response.return_value == -1){
+        Materialize.toast("An error occurred, please try later.", 5000);
       }
       else{
-        Materialize.toast("An error occurred, please try later.", 5000);
+        loadAllButtonsLights();
       }
   })
   .catch(function(error){
@@ -312,27 +312,24 @@ function desactivateAlarm(){
 
 function checkStatus(){
 
-  getFromServer("alarmTrigger")
-  .then(function(response){
-      console.log("server response: " + response.result);
-      if (response.result == true) {
-        //console.log("enter!");
-        //document.getElementById("triggerInfo").hidden = false;
-        //document.getElementById("alarmTriggerInfo").hidden = false;
+  getVar("alarmTrigger").then(function(result){
+    var alarmTrigger = result;
+    if(alarmTrigger >= 0){
+      if(alarmTrigger == 1){
         var $toastContent = $('<h4> Alarm was trigger</h4>');
         Materialize.toast($toastContent, 3000, 'green');
       }
       else {
-        console.log("enter!");
-        //document.getElementById("triggerInfo").hidden = false;
-        //document.getElementById("alarmTriggerInfo").hidden = true;
         var $toastContent = $('<h4> Alarm was not trigger</h4>');
         Materialize.toast($toastContent, 3000, 'red');
       }
-  })
-  .catch(function(error){
-      //Materialize.toast("An error occurred on the server, please try later.", 5000);
-      console.log(error);
+    }
+    else {
+      console.log("Wrong command when asking for a var at getVar()");
+      Materialize.toast("An error occurred on the server, please try later.", 5000);
+    }
+  }, function(error){
+    Materialize.toast("An error occurred on the server, please try later.", 5000);
   });
 }
 
@@ -359,112 +356,131 @@ function checkStatus(){
 // disabled) of the light page.
 function loadAllButtonsLights(){
 
-  // Load the buttons related with the indoorLight.
-  getFromServer("indoorLight")
-  .then(function(response){
-      console.log("server response: " + response.result);
-      if (response.result >=0) {
-        if(response.result == 0){
-          document.getElementById("turnIndoorsOn").disabled = false;
-          document.getElementById("turnIndoorsOff").disabled = true;
-        }
-        else {
-          document.getElementById("turnIndoorsOn").disabled = true;
-          document.getElementById("turnIndoorsOff").disabled = false;
-        }
-        document.getElementById("indoorIntensity").value= response.result;
+  // Load the buttons related with the Light 1.
+  getVar("light1").then(function(result){
+    var light1 = result;
+    if(light1 >= 0){
+      if(light1 == 0){
+        document.getElementById("turnLight1On").disabled = false;
+        document.getElementById("turnLight1Off").disabled = true;
       }
       else {
-        Materialize.toast("An error occurred on the server, please try later.", 5000);
+        document.getElementById("turnLight1On").disabled = true;
+        document.getElementById("turnLight1Off").disabled = false;
       }
-  })
-  .catch(function(error){
-      //Materialize.toast("An error occurred on the server, please try later.", 5000);
-      console.log(error);
+      document.getElementById("light1Intensity").value = light1;
+    }
+    else {
+      console.log("Wrong command when asking for a var at getVar()");
+      Materialize.toast("An error occurred on the server, please try later.", 5000);
+    }
+  }, function(error){
+    Materialize.toast("An error occurred on the server, please try later.", 5000);
   });
 
-  // Load the buttons related with the outdoorLight.
-  getFromServer("outdoorLight")
-  .then(function(response){
-      console.log("server response: " + response.result);
-      if(response.result >= 0){
-        if(response.result == 0){
-          document.getElementById("turnOutdoorsOn").disabled = false;
-          document.getElementById("turnOutdoorsOff").disabled = true;
-        }
-        else{
-          document.getElementById("turnOutdoorsOn").disabled = true;
-          document.getElementById("turnOutdoorsOff").disabled = false;
-        }
-        document.getElementById("outdoorIntensity").value= response.result;
+  // Load the buttons related with the Light 2.
+  getVar("light2").then(function(result){
+    var light2 = result;
+    if(light2 >= 0){
+      if(light2 == 0){
+        document.getElementById("turnLight2On").disabled = false;
+        document.getElementById("turnLight2Off").disabled = true;
       }
       else {
-        Materialize.toast("An error occurred on the server, please try later.", 5000);
+        document.getElementById("turnLight2On").disabled = true;
+        document.getElementById("turnLight2Off").disabled = false;
       }
-  })
-  .catch(function(error){
-      //Materialize.toast("An error occurred on the server, please try later.", 5000);
-      console.log(error);
+      document.getElementById("light2Intensity").value = light2;
+    }
+    else {
+      console.log("Wrong command when asking for a var at getVar()");
+      Materialize.toast("An error occurred on the server, please try later.", 5000);
+    }
+  }, function(error){
+    Materialize.toast("An error occurred on the server, please try later.", 5000);
   });
+
 
   // Load the buttons related with the lightSensor.
-  getFromServer("prEnable")
-  .then(function(response){
-      console.log("server response: " + response.result);
-      if(response.result == true){
+  getVar("enablePhotoresistor").then(function(result){
+    var enablePhotoresistor = result;
+    if(enablePhotoresistor >= 0){
+      if(enablePhotoresistor == 1){
         document.getElementById("enableLightSensor").disabled = true;
         document.getElementById("disableLightSensor").disabled = false;
       }
-      else{
+      else {
         document.getElementById("enableLightSensor").disabled = false;
         document.getElementById("disableLightSensor").disabled = true;
       }
-  })
-  .catch(function(error){
-      //Materialize.toast("An error occurred on the server, please try later.", 5000);
-      console.log(error);
+    }
+    else {
+      console.log("Wrong command when asking for a var at getVar()");
+      Materialize.toast("An error occurred on the server, please try later.", 5000);
+    }
+  }, function(error){
+    Materialize.toast("An error occurred on the server, please try later.", 5000);
   });
 
   // Load the buttons related with the movemmentSensor.
-  getFromServer("mvEnable")
-  .then(function(response){
-      console.log("server response: " + response.result);
-      if(response.result == true){
+  getVar("enableMovementSensorToTurnLights").then(function(result){
+    var enableMovementSensorToTurnLights = result;
+    if(enableMovementSensorToTurnLights >= 0){
+      if(enableMovementSensorToTurnLights == 1){
         document.getElementById("enableMovemmentSensor").disabled = true;
         document.getElementById("disableMovemmentSensor").disabled = false;
       }
-      else{
+      else {
         document.getElementById("enableMovemmentSensor").disabled = false;
         document.getElementById("disableMovemmentSensor").disabled = true;
       }
-  })
-  .catch(function(error){
-      //Materialize.toast("An error occurred on the server, please try later.", 5000);
-      console.log(error);
+    }
+    else {
+      console.log("Wrong command when asking for a var at getVar()");
+      Materialize.toast("An error occurred on the server, please try later.", 5000);
+    }
+  }, function(error){
+    Materialize.toast("An error occurred on the server, please try later.", 5000);
   });
-
 }
+
 
 // This function is used to load all the current buttons states (active or
 // disabled) of the alarm page.
 function loadAllButtonsAlarm(){
   // Load the buttons related with the alarm.
-  getFromServer("alarmActive")
-  .then(function(response){
-      console.log("server response: " + response.result);
-      if(response.result == true){
+  getVar("alarmActive").then(function(result){
+    var alarmActive = result;
+    if(alarmActive >= 0){
+      if(alarmActive == 1){
         document.getElementById("activateAlarmBtn").disabled = true;
         document.getElementById("desactivateAlarmBtn").disabled = false;
         document.getElementById("checkStatusBtnContainer").hidden = false;
       }
-      else{
+      else {
         document.getElementById("activateAlarmBtn").disabled = false;
         document.getElementById("desactivateAlarmBtn").disabled = true;
         document.getElementById("checkStatusBtnContainer").hidden = true;
       }
-  })
-  .catch(function(error){
-      //Materialize.toast("An error occurred on the server, please try later.", 5000);
-      console.log(error);
+    }
+    else {
+      console.log("Wrong command when asking for a var at getVar()");
+      Materialize.toast("An error occurred on the server, please try later.", 5000);
+    }
+  }, function(error){
+    Materialize.toast("An error occurred on the server, please try later.", 5000);
   });
+}
+//This function returns a var from the server.
+function getVar(varName){
+  var func = "getVar";
+  var promise = new Promise(function(resolve, reject){
+    postToServer(func,varName).then(function(response){
+      resolve(response.return_value);
+    })
+    .catch(function(error){
+      reject("Error when posting to server.");
+    })
+  });
+  return promise;
 }

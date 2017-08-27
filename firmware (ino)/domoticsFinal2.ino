@@ -2,14 +2,19 @@
 #include <Adafruit_DHT.h>
 
 //Light's variables.
-//IMPORTANT: By default the light1 will be the outdoors light, to change this
-//make the neccesary changes in checkExteriorLightIntensity() function.
-//IMPORTANT: By default the light2 will be the indoors light, to change this
-//make the neccesary changes in checkAlarm() function.
+//IMPORTANT: By default the light1 will be the outdoors light. This means
+//that the light will be control by the Photoresistor sensor (if enable). To
+//change only modify the lightsUsedByPr variable.
+//IMPORTANT: By default the light2 will be the indoors light. This means
+//that the light will be control by the Movement sensor (if enable). To
+//change only modify the lightsUsedByMov variable.
+
 const int light1Pin = 0;
 const int light2Pin = 1;
 int currentlight1Intensity;
 int currentlight2Intensity;
+int lightsUsedByMov = 2;
+int lightsUsedByPr = 1;
 
 //Photoresistor variables.
 const int photoresistorPin = A0;
@@ -111,9 +116,9 @@ void setup() {
 }
 
 void loop() {
-    //checkAlarmActivationOrDesactivation();
-    //checkExteriorLightIntensity();
-    //checkAlarm();
+    checkAlarmActivationOrDesactivation();
+    checkExteriorLightIntensity();
+    checkAlarm();
 
     //TO TEST!
     checkTempAndHum();
@@ -154,12 +159,11 @@ int lightCommands(String command){
         analogWrite(light1Pin, intValue);
         currentlight1Intensity = intValue;
         return (130 + intValue);
-
       }
     }
 
     //Light 2 controls.
-    if(command.substring(6,7) == "2"){
+    else if(command.substring(6,7) == "2"){
       if(command.substring(8,14) == "TURNON"){
         analogWrite(light2Pin, 255); //Turn on at max intensity.
         currentlight2Intensity = 9; //Posibles values goes between 0 and 9;
@@ -182,6 +186,7 @@ int lightCommands(String command){
       }
     }
   }
+  return -1;
 }
 
 
@@ -190,6 +195,8 @@ int lightCommands(String command){
 //"VARNAME-TRUE/FALSE-VALUE" note that all is in uppercase (except value), and value
 //is only use when setting the alarmActive to true or false and it must be a
 //string value that represents the alarm password.
+//The format to setting the light used by movemment sensor is:
+//LIGHTSUSEDBYMOV-LIGHTNUMBER(BETWEEN 0 AND 9).
 //The return value will be listed as follow:
 // 1--> enablePhotoresistor var was set TRUE.
 // 2--> enablePhotoresistor var was set FALSE.
@@ -197,9 +204,13 @@ int lightCommands(String command){
 // 4--> enableMovementSensorToTurnLights var was set FALSE.
 // 5--> The alarm was active correctly.
 // 6--> The alarm was desactivate correctly.
+// 7--> The light used by the movemment sensor was succesfully change.
+// 8--> The light used by the photo resistor sensor was succesfully change.
 // -1--> Wrong command.
 // -2--> Wrong password when trying to activate the alarm.
 // -3--> Wrong password when trying to desactivate the alarm.
+// -4--> Error setting the light used by the movement sensor. Wrong format.
+// -5--> Error setting the light used by the photo resistor sensor. Wrong format.
 int setVariables(String command){
     if(command == "ENABLELIGHTSENSOR-TRUE"){
         enablePhotoresistor = TRUE;
@@ -235,10 +246,34 @@ int setVariables(String command){
        }
        else{return -3;}
     }
+    else if(command.substring(0,15) == "LIGHTSUSEDBYMOV"){
+      if(command.length() == 17){
+        String light = command.substring(16, 17);
+        int lightNumber = (int) light.charAt(0);
+        if(lightNumber >= 0 && lightNumber < 10){
+          lightsUsedByMov = lightNumber;
+          return 7;
+        }
+        return -4;
+      }
+      return -4;
+    }
+    else if(command.substring(0,14) == "LIGHTSUSEDBYPR"){
+      if(command.length() == 16){
+        String light = command.substring(15, 16);
+        int lightNumber = (int) light.charAt(0);
+        if(lightNumber >= 0 && lightNumber < 10){
+          lightsUsedByPr = lightNumber;
+          return 8;
+        }
+        return -5;
+      }
+      return -5;
+    }
+
     else {
         return -1;
     }
-
 }
 
 void checkExteriorLightIntensity(){
@@ -246,15 +281,15 @@ void checkExteriorLightIntensity(){
     //ohm resistor. Normal good light value is near 4000.
     if(enablePhotoresistor){
         lightSensorValue = analogRead(photoresistorPin);
-        if((lightSensorValue <= minOutdoorIntensity) && (currentlight1Intensity == 0)){
-            analogWrite(light1Pin, 255); //Turns on the outdoors light at a max intensity.
-            currentlight1Intensity = 9; //Posibles values goes between 0 and 9.
+        if((lightSensorValue <= minOutdoorIntensity) && (getLightIntensity(lightsUsedByPr) == 0)){
+            analogWrite(getLightPin(lightsUsedByPr), 255); //Turns on the outdoors light at a max intensity.
+            setLightIntensity(lightsUsedByPr, 9);
             lightTurnedOnByPrSensor = true;
-        return;
+            return;
         }
-        else if((lightSensorValue > minOutdoorIntensity) && (currentlight1Intensity != 0) && lightTurnedOnByPrSensor){
-            analogWrite(light1Pin, 0);
-            currentlight1Intensity = 0;
+        else if((lightSensorValue > minOutdoorIntensity) && (getLightIntensity(lightsUsedByPr) != 0) && lightTurnedOnByPrSensor){
+            analogWrite(getLightPin(lightsUsedByPr), 0);
+            setLightIntensity(lightsUsedByPr, 0);
             lightTurnedOnByPrSensor = false;
             return;
         }
@@ -287,16 +322,16 @@ void checkAlarm(){
         if(enableMovementSensorToTurnLights){
             movementSensorValue = digitalRead(movementSensorPin);
             if(movementSensorValue){
-                if(currentlight2Intensity == 0){ //Only if the indoors light is turn off.
-                    analogWrite(light2Pin, 255); //Turns on the indoors light.
-                    currentlight2Intensity = 9;
+                if(getLightIntensity(lightsUsedByMov) == 0){ //Only if the indoors light is turn off.
+                    analogWrite(getLightPin(lightsUsedByMov), 255); //Turns on the indoors light.
+                    setLightIntensity(lightsUsedByMov,9);
                     lightTurnedOnByMovSensor = TRUE;
                 }
 
             }
             else if(lightTurnedOnByMovSensor){ //Only if the light was turned by the sensor and there is no movemment.
-                    analogWrite(light2Pin, 0); //Turns off the indoors light.
-                    currentlight2Intensity = 0;
+                    analogWrite(getLightPin(lightsUsedByMov), 0); //Turns off the indoors light.
+                    setLightIntensity(lightsUsedByMov,0);
                     lightTurnedOnByMovSensor = FALSE;
             }
         }
@@ -340,6 +375,12 @@ int getVar(String var){
   else if(var == "enableMovementSensorToTurnLights"){
     if(enableMovementSensorToTurnLights == TRUE) return 1;
     else return 0;
+  }
+  else if(var == "lightsUsedByMov"){
+    return lightsUsedByMov;
+  }
+  else if(var == "lightsUsedByPr"){
+    return lightsUsedByPr;
   }
   else return -1;
 }
@@ -385,4 +426,28 @@ void desactivateAlarm(){
   //Sends to the arduino board, that the alarm is not active.
   digitalWrite(arduinoOutputCommunicationPin, LOW);
   delay(100);
+}
+
+int getLightPin(int lightNumber){
+  switch (lightNumber) {
+    case 1: return light1Pin;
+    case 2: return light2Pin;
+  }
+  return -1;
+}
+
+int getLightIntensity(int lightNumber){
+  switch (lightNumber) {
+    case 1: return currentlight1Intensity;
+    case 2: return currentlight2Intensity;
+  }
+  return -1;
+}
+void setLightIntensity(int lightNumber,int intensity){
+  switch (lightNumber) {
+    case 1: currentlight1Intensity = intensity;
+    break;
+    case 2: currentlight2Intensity = intensity;
+    break;
+  }
 }

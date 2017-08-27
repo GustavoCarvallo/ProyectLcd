@@ -35,22 +35,22 @@
 		</div>
 		<div class="row">
 			<div class="col m6">
-				<h4 class="center-align">Outdoors</h4>
+				<h4 class="center-align">Light 1</h4>
 			</div>
 			<div class="col m6">
-				<h4 class="center-align">Indoors</h4>
+				<h4 class="center-align">Light 2</h4>
 			</div>
 	  </div>
 
 		<!-- Buttons Lights-->
 		<div class="row">
 			<div class="col m6 center-align">
-				<button type="button" class="btn-large waves-effect waves-light" id="turnOutdoorsOn" onclick="turnOutdoorsLightsOn()">On</button>
-				<button type="button" class="btn-large waves-effect waves-light" id="turnOutdoorsOff" onclick="turnOutdoorsLightsOff()">Off</button>
+					<button type="button" class="btn-large waves-effect waves-light" id="turnLight1On" onclick="turnOnLight1()">On</button>
+				<button type="button" class="btn-large waves-effect waves-light" id="turnLight1Off" onclick="turnOffLight1()">Off</button>
 			</div>
 			<div class="col m6 center-align">
-				<button type="button" class="btn-large waves-effect waves-light" id="turnIndoorsOn" onclick="turnIndoorsLightsOn()">On</button>
-				<button type="button" class="btn-large waves-effect waves-light" id="turnIndoorsOff" onclick="turnIndoorsLightsOff()">Off</button>
+				<button type="button" class="btn-large waves-effect waves-light" id="turnLight2On" onclick="turnOnLight2()">On</button>
+				<button type="button" class="btn-large waves-effect waves-light" id="turnLight2Off" onclick="turnOffLight2()">Off</button>
 			</div>
 		</div>
 
@@ -74,14 +74,14 @@
 			<div class="col m6 center-align">
 				<form>
 					<p class="range-field">
-						<input id="outdoorIntensity" type="range" min="0" max="9" onchange="changeOutdoorsLightsIntensity()">
+						<input id="light1Intensity" type="range" min="0" max="9" onchange="changeLight1Intensity()">
 					</p>
 				</form>
 			</div>
 			<div class="col m6 center-align">
 				<form>
 					<p class="range-field">
-						<input id="indoorIntensity" type="range" min="0" max="9" onchange="changeIndoorsLightsIntensity()">
+						<input id="light2Intensity" type="range" min="0" max="9" onchange="changeLight2Intensity()">
 					</p>
 				</form>
 			</div>
