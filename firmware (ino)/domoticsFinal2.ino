@@ -81,6 +81,7 @@ void setup() {
     Particle.function("light", lightCommands);
     Particle.function("setValues", setVariables);
     Particle.function("getVar", getVar);
+    Particle.variable("temp", temperature);
     //Particle.variable("light1", currentlight1Intensity);
     //Particle.variable("light2", currentlight2Intensity);
     //Particle.variable("alarmActive", alarmActive);
@@ -347,9 +348,11 @@ void checkTempAndHum(){
 // 1 --> TRUE
 int getVar(String var){
   if(var == "temperature"){
+    checkTempAndHum();
     return (int) temperature;
   }
   else if(var == "humidity"){
+    checkTempAndHum();
     return (int) humidity;
   }
   else if(var == "light1"){

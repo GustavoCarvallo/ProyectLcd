@@ -1,11 +1,11 @@
 // This function post all the request to the Spark server. It will return the
 // 'return_value' of the server response;
 function postToServer(func, argument) {
-  //This photon id belongs to the last one. And the access_token belongs to the user 'badassphoton@gmail.com'
+  //This photon id belongs to the last one. And the access_token belongs to the user 'badassphoton@gmail.com' server running on laptop.
   var postUrl = 'http://localhost:8080/v1/devices/2f0046000547343233323032/' + func + '?access_token=3f902ab40e940991ae3e3763b00aeb0417b99114';
 
-  //var postUrl = 'http://localhost:8080/v1/devices/28002d000647343339373536/' + func + '?access_token=fa9ceffbb279f591305221e3ba8f0273a46083cf';
-  //var postUrl = 'http://192.168.2.3:8080/v1/devices/28002d000647343339373536/' + func + '?access_token=5eefa91a0205cf41e2a132cb0dd7a77d32f390bf';
+  //This photon id belongs to the last one. And the access_token belongs to the user 'raspberrypi@gmail.com' server running on Raspberry Pi.
+  //var postUrl = 'http://192.168.2.2:8080/v1/devices/2f0046000547343233323032/' + func + '?access_token=bf21dd7226278a6c5d3c5f16cb2db00590fc81e7';
 
   //Note that the server response object is like the following example:
   // {
@@ -37,11 +37,11 @@ function postToServer(func, argument) {
 // This function manage all the get request to the Spark server. It will return the
 // 'result' of the server response.
 function getFromServer(variableName){
-  //This photon id belongs to the last one. And the access_token belongs to the user 'badassphoton@gmail.com'
+  //This photon id belongs to the last one. And the access_token belongs to the user 'badassphoton@gmail.com' server running on laptop.
   var postUrl = 'http://localhost:8080/v1/devices/2f0046000547343233323032/' + variableName + '?access_token=3f902ab40e940991ae3e3763b00aeb0417b99114';
 
-  //var postUrl = 'http://localhost:8080/v1/devices/28002d000647343339373536/' + func + '?access_token=fa9ceffbb279f591305221e3ba8f0273a46083cf';
-  //var postUrl = 'http://192.168.2.3:8080/v1/devices/28002d000647343339373536/' + func + '?access_token=5eefa91a0205cf41e2a132cb0dd7a77d32f390bf';
+  //This photon id belongs to the last one. And the access_token belongs to the user 'raspberrypi@gmail.com' server running on Raspberry Pi.
+  //var postUrl = 'http://192.168.2.2:8080/v1/devices/2f0046000547343233323032/' + variableName + '?access_token=bf21dd7226278a6c5d3c5f16cb2db00590fc81e7';
 
   //Note that the server response object is like the following example:
   // {

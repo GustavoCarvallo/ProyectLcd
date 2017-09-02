@@ -1,4 +1,16 @@
+//Spark server on laptop (user: badassphoton@gmail.com)
 //Commands for asking for a variable.
 curl http://localhost:8080/v1/devices/2f0046000547343233323032/VARNAME?access_token=3f902ab40e940991ae3e3763b00aeb0417b99114
 //Commands for asking for a function.
 curl http://localhost:8080/v1/devices/2f0046000547343233323032/FUNCTIONNAME \-d access_token=3f902ab40e940991ae3e3763b00aeb0417b99114 \-d "args=ARGS"
+
+//Spark server on Raspberry Pi (user: raspberrypi@gmail.com)
+//Commands for asking for a variable.
+curl http://192.168.2.2:8080/v1/devices/2f0046000547343233323032/VARNAME?access_token=bf21dd7226278a6c5d3c5f16cb2db00590fc81e7
+//Commands for asking for a function.
+curl http://192.168.2.2:8080/v1/devics/2f0046000547343233323032/VARNAME \-d access_token=bf21dd7226278a6c5d3c5f16cb2db00590fc81e7 \-d "args=ARGS"
+
+//Note:
+//VARNAME must be replaced with the name of the variable wanted.
+//FUNCTIONNAME must be replaced with the name of the function wanted.
+//ARGS must be replaced with the args of the function.
