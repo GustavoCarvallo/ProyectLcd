@@ -2,10 +2,10 @@
 // 'return_value' of the server response;
 function postToServer(func, argument) {
   //This photon id belongs to the last one. And the access_token belongs to the user 'badassphoton@gmail.com' server running on laptop.
-  var postUrl = 'http://localhost:8080/v1/devices/2f0046000547343233323032/' + func + '?access_token=3f902ab40e940991ae3e3763b00aeb0417b99114';
+  //var postUrl = 'http://localhost:8080/v1/devices/2f0046000547343233323032/' + func + '?access_token=3f902ab40e940991ae3e3763b00aeb0417b99114';
 
   //This photon id belongs to the last one. And the access_token belongs to the user 'raspberrypi@gmail.com' server running on Raspberry Pi.
-  //var postUrl = 'http://192.168.2.2:8080/v1/devices/2f0046000547343233323032/' + func + '?access_token=bf21dd7226278a6c5d3c5f16cb2db00590fc81e7';
+  var postUrl = 'http://192.168.2.2:8080/v1/devices/2f0046000547343233323032/' + func + '?access_token=bf21dd7226278a6c5d3c5f16cb2db00590fc81e7';
 
   //Note that the server response object is like the following example:
   // {
@@ -471,6 +471,77 @@ function loadAllButtonsAlarm(){
   });
 }
 
+function loadAllClimateButtons() {
+  getVar("fanOn").then(function(result){
+    if(result == 0){
+      document.getElementById("turnOnCoolBtn").disabled = false;
+      document.getElementById("turnOffCoolBtn").disabled = true;
+    }
+    else if(result == 1) {
+      document.getElementById("turnOnCoolBtn").disabled = true;
+      document.getElementById("turnOffCoolBtn").disabled = false;
+    }
+    else {
+      console.log("Wrong command when asking for a var at getVar()");
+      Materialize.toast("An error occurred on the server, please try later.", 5000);
+    }
+  }, function(error){
+    Materialize.toast("An error occurred on the server, please try later.", 5000);
+  });
+
+  getVar("heatingOn").then(function(result){
+    if(result == 0){
+      document.getElementById("turnOnHeatBtn").disabled = false;
+      document.getElementById("turnOffHeatBtn").disabled = true;
+    }
+    else if(result == 1) {
+      document.getElementById("turnOnHeatBtn").disabled = true;
+      document.getElementById("turnOffHeatBtn").disabled = false;
+    }
+    else {
+      console.log("Wrong command when asking for a var at getVar()");
+      Materialize.toast("An error occurred on the server, please try later.", 5000);
+    }
+  }, function(error){
+    Materialize.toast("An error occurred on the server, please try later.", 5000);
+  });
+
+  getVar("autoClimateControlOn").then(function(result){
+    if(result == 0){
+      document.getElementById("turnOffAutoClimateBtn").disabled = true;
+    }
+    else if(result == 1) {
+      document.getElementById("turnOffAutoClimateBtn").disabled = false;
+      document.getElementById("turnOnCoolBtn").disabled = true;
+      document.getElementById("turnOffCoolBtn").disabled = true;
+      document.getElementById("turnOnHeatBtn").disabled = true;
+      document.getElementById("turnOffHeatBtn").disabled = true;
+
+      //Load the current auto climate control temperature inside the inputTemp.
+      getVar("autoClimateControlTemperature").then(function(result){
+        if(result != -100){   //-100 is an error code.
+          document.getElementById("inputTemp").value = result;
+        }
+        else {
+          console.log("Wrong command when asking for a var at getVar()");
+          Materialize.toast("An error occurred on the server, please try later.", 5000);
+        }
+      }, function(error){
+        console.log("Wrong command when asking for a var at getVar()");
+        Materialize.toast("An error occurred on the server, please try later.", 5000);
+      });
+    }
+    else {
+      console.log("Wrong command when asking for a var at getVar()");
+      Materialize.toast("An error occurred on the server, please try later.", 5000);
+    }
+  }, function(error){
+    Materialize.toast("An error occurred on the server, please try later.", 5000);
+  });
+
+  checkTemperature();
+}
+
 //This function checks the current temperature.
 function checkTemperature() {
   getVar("temperature").then(function(result){
@@ -489,23 +560,109 @@ function checkTemperature() {
 }
 
 function turnOnHeat() {
-  //TO IMPLEMENT!
+  var func = "climate";
+  postToServer(func, "HEATING-TURNON")
+  .then(function(response){
+      console.log("server response: " + response.return_value);
+      if(response.return_value == -1){
+        Materialize.toast("An error occurred, please try later.", 5000);
+      }
+      else{
+        loadAllClimateButtons();
+      }
+  })
+  .catch(function(error){
+      Materialize.toast("An error occurred, please try later.", 5000);
+  });
 }
 
 function turnOffHeat() {
-  //TO IMPLEMENT!
+  var func = "climate";
+  postToServer(func, "HEATING-TURNOFF")
+  .then(function(response){
+      console.log("server response: " + response.return_value);
+      if(response.return_value == -1){
+        Materialize.toast("An error occurred, please try later.", 5000);
+      }
+      else{
+        loadAllClimateButtons();
+      }
+  })
+  .catch(function(error){
+      Materialize.toast("An error occurred, please try later.", 5000);
+  });
 }
 
 function turnOnCool() {
-  //TO IMPLEMENT!
+  var func = "climate";
+  postToServer(func, "FAN-TURNON")
+  .then(function(response){
+      console.log("server response: " + response.return_value);
+      if(response.return_value == -1){
+        Materialize.toast("An error occurred, please try later.", 5000);
+      }
+      else{
+        loadAllClimateButtons();
+      }
+  })
+  .catch(function(error){
+      Materialize.toast("An error occurred, please try later.", 5000);
+  });
 }
 
 function turnOffCool() {
-  //TO IMPLEMENT!
+  var func = "climate";
+  postToServer(func, "FAN-TURNOFF")
+  .then(function(response){
+      console.log("server response: " + response.return_value);
+      if(response.return_value == -1){
+        Materialize.toast("An error occurred, please try later.", 5000);
+      }
+      else{
+        loadAllClimateButtons();
+      }
+  })
+  .catch(function(error){
+      Materialize.toast("An error occurred, please try later.", 5000);
+  });
 }
 
 function setAutoClimate() {
-  //TO IMPLEMENT!
+  var func = "climate";
+  var temperatureSeleted = document.getElementById("inputTemp").value;
+  postToServer(func, "AUTOCLIMATECONTROL-ON-"+temperatureSeleted)
+  .then(function(response){
+      console.log("server response: " + response.return_value);
+      if(response.return_value == -1){
+        Materialize.toast("An error occurred, please try later.", 5000);
+      }
+      else if(response.return_value == -2){
+          Materialize.toast("Error occurred, temperature must be between 18 and 30 degrees.", 5000);
+      }
+      else{
+        loadAllClimateButtons();
+      }
+  })
+  .catch(function(error){
+      Materialize.toast("An error occurred, please try later.", 5000);
+  });
+}
+
+function turnOffAutoClimate() {
+  var func = "climate";
+  postToServer(func, "AUTOCLIMATECONTROL-OFF")
+  .then(function(response){
+      console.log("server response: " + response.return_value);
+      if(response.return_value == -1){
+        Materialize.toast("An error occurred, please try later.", 5000);
+      }
+      else{
+        loadAllClimateButtons();
+      }
+  })
+  .catch(function(error){
+      Materialize.toast("An error occurred, please try later.", 5000);
+  });
 }
 
 //This function returns a var from the server.

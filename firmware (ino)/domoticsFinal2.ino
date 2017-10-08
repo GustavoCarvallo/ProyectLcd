@@ -59,6 +59,13 @@ DHT dht(DHTPIN, DHTTYPE);
 double temperature;
 double humidity;
 
+//Climate control variables.
+const int fanPin = 4;
+bool autoClimateControlOn;
+bool heatingOn;
+bool fanOn;
+int autoClimateControlTemperature;
+
 void setup() {
     //Set lights as output
     pinMode(light1Pin, OUTPUT);
@@ -76,11 +83,14 @@ void setup() {
     //Set arduino output communication pin as output;
     pinMode(arduinoOutputCommunicationPin, OUTPUT);
 
+    //Set fan as output.
+    pinMode(fanPin, OUTPUT);
 
     //Set some function and variables.
     Particle.function("light", lightCommands);
     Particle.function("setValues", setVariables);
     Particle.function("getVar", getVar);
+    Particle.function("climate", climateControlCommands);
     Particle.variable("temp", temperature);
     //Particle.variable("light1", currentlight1Intensity);
     //Particle.variable("light2", currentlight2Intensity);
@@ -120,7 +130,7 @@ void loop() {
     checkAlarmActivationOrDesactivation();
     checkExteriorLightIntensity();
     checkAlarm();
-    checkTempAndHum();
+    //checkTempAndHum();
 }
 
 // This method operates all the funcions related with the lights.
@@ -188,6 +198,64 @@ int lightCommands(String command){
   return -1;
 }
 
+// This method operates all the funcions related with the climate control.
+// It recives a String as a command. The format of this string must be like this:
+// "HEATING/FAN-ON/OFF" or "AUTOCLIMATECONTROL-ON/OFF-TEMPERATURE" note that all is
+// in uppercase, and temperature is only use when turning on auto climate control
+// and it must be a value between 18 and 30.
+// The return value will be:
+// 1 --> Auto Climate Control Set Correctly.
+// 2 --> Auto Climate Control Off.
+// 3 --> Heating turn on.
+// 4 --> Heating turn off.
+// 5 --> Fan turn on.
+// 6 --> Fan turn off.
+// -1 --> Wrong command.
+// -2 --> Temperature error, temperature must be an INTEGER between 18 and 30.
+int climateControlCommands(String command){
+    if(command.substring(0,18) == "AUTOCLIMATECONTROL") {
+      if(command.substring(19,21) == "ON") {
+        if(command.length() == 24){
+          int tempSelected = command.substring(22,24).toInt();
+          if(tempSelected >= 18 && tempSelected <= 30){
+            autoClimateControlTemperature = tempSelected;
+            autoClimateControlOn = true;
+            return 1;
+          }
+        }
+        return -2;
+      }
+      else if(command.substring(19,22) == "OFF"){
+        autoClimateControlOn = false;
+        return 2;
+      }
+    }
+    else if(command.substring(0,7) == "HEATING"){
+      if(command.substring(8,14) == "TURNON"){
+        heatingOn = true;
+        return 3;
+        //MUST IMPLEMENT THE HEATING DEVICE.
+      }
+      else if(command.substring(8,15) == "TURNOFF"){
+        heatingOn = false;
+        return 4;
+        //MUST IMPLEMENT THE HEATING DEVICE.
+      }
+    }
+    else if(command.substring(0,3) == "FAN"){
+      if(command.substring(4,10) == "TURNON"){
+        digitalWrite(fanPin, HIGH);
+        fanOn = true;
+        return 5;
+      }
+      else if(command.substring(4,11) == "TURNOFF"){
+        digitalWrite(fanPin, LOW);
+        fanOn = false;
+        return 6;
+      }
+    }
+    else return -1;
+}
 
 //This method operates all the funcions related with the set variables (boolean variables).
 //It recives a String as a command. The format of this string must be like this:
@@ -269,7 +337,6 @@ int setVariables(String command){
       }
       return -5;
     }
-
     else {
         return -1;
     }
@@ -383,6 +450,21 @@ int getVar(String var){
   else if(var == "lightsUsedByPr"){
     return lightsUsedByPr;
   }
+  else if(var == "fanOn"){
+    if(fanOn == TRUE) return 1;
+    else return 0;
+  }
+  else if(var == "heatingOn"){
+    if(heatingOn == TRUE) return 1;
+    else return 0;
+  }
+  else if(var == "autoClimateControlOn"){
+    if(autoClimateControlOn == TRUE) return 1;
+    else return 0;
+  }
+  else if(var == "autoClimateControlTemperature"){
+    return autoClimateControlTemperature;
+  }
   else return -100;
 }
 
@@ -444,6 +526,7 @@ int getLightIntensity(int lightNumber){
   }
   return -1;
 }
+
 void setLightIntensity(int lightNumber,int intensity){
   switch (lightNumber) {
     case 1: currentlight1Intensity = intensity;
