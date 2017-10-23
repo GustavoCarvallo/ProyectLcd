@@ -1,6 +1,3 @@
-// This #include statement was automatically added by the Particle IDE.
-#include <Adafruit_DHT.h>
-
 //Light's variables.
 //IMPORTANT: By default the light1 will be the outdoors light. This means
 //that the light will be control by the Photoresistor sensor (if enable). To
@@ -52,12 +49,9 @@ int movementSensorValue;
 int lightSensorValue;
 int arduinoComVal;
 
-//DHT11 Temperature Sensor.
-#define DHTTYPE DHT11
-const int DHTPIN = A4;
-DHT dht(DHTPIN, DHTTYPE);
+//temperature sensor variables.
 double temperature;
-double humidity;
+const int tempSensorPin = A4;
 
 //Climate control variables.
 const int fanPin = 4;
@@ -65,6 +59,9 @@ bool autoClimateControlOn;
 bool heatingOn;
 bool fanOn;
 int autoClimateControlTemperature;
+
+//Reley variables.
+int const relayPin = 7;
 
 void setup() {
     //Set lights as output
@@ -85,6 +82,12 @@ void setup() {
 
     //Set fan as output.
     pinMode(fanPin, OUTPUT);
+
+    //Set temperature sensor as input.
+    pinMode(tempSensorPin, INPUT);
+
+    //Set relay module as output.
+    pinMode(relayPin, OUTPUT);
 
     //Set some function and variables.
     Particle.function("light", lightCommands);
@@ -122,15 +125,14 @@ void setup() {
     currentlight1Intensity = 0;
     currentlight2Intensity = 0;
 
-    //DTH11 Sensor begin.
-    dht.begin();
+
 }
 
 void loop() {
     checkAlarmActivationOrDesactivation();
     checkExteriorLightIntensity();
     checkAlarm();
-    //checkTempAndHum();
+    //checkTemp();
 }
 
 // This method operates all the funcions related with the lights.
@@ -233,13 +235,13 @@ int climateControlCommands(String command){
     else if(command.substring(0,7) == "HEATING"){
       if(command.substring(8,14) == "TURNON"){
         heatingOn = true;
+        digitalWrite(relayPin, HIGH);
         return 3;
-        //MUST IMPLEMENT THE HEATING DEVICE.
       }
       else if(command.substring(8,15) == "TURNOFF"){
         heatingOn = false;
+        digitalWrite(relayPin, LOW);
         return 4;
-        //MUST IMPLEMENT THE HEATING DEVICE.
       }
     }
     else if(command.substring(0,3) == "FAN"){
@@ -404,9 +406,9 @@ void checkAlarm(){
     }
 }
 
-void checkTempAndHum(){
-    temperature = dht.getTempCelcius();
-    humidity = dht.getHumidity();
+void checkTemp(){
+  //4,6 is the readed voltage from the particle photon.
+  temperature = (analogRead (tempSensorPin) * (4.6 / 1023.0));
 }
 
 //This method returns an specific variable ask.
@@ -415,12 +417,8 @@ void checkTempAndHum(){
 // 1 --> TRUE
 int getVar(String var){
   if(var == "temperature"){
-    checkTempAndHum();
+    checkTemp();
     return (int) temperature;
-  }
-  else if(var == "humidity"){
-    checkTempAndHum();
-    return (int) humidity;
   }
   else if(var == "light1"){
     return (int) currentlight1Intensity;

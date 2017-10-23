@@ -5,7 +5,7 @@ function postToServer(func, argument) {
   //var postUrl = 'http://localhost:8080/v1/devices/2f0046000547343233323032/' + func + '?access_token=3f902ab40e940991ae3e3763b00aeb0417b99114';
 
   //This photon id belongs to the last one. And the access_token belongs to the user 'raspberrypi@gmail.com' server running on Raspberry Pi.
-  var postUrl = 'http://192.168.2.2:8080/v1/devices/2f0046000547343233323032/' + func + '?access_token=bf21dd7226278a6c5d3c5f16cb2db00590fc81e7';
+  var postUrl = 'http://192.168.2.25:8080/v1/devices/2f0046000547343233323032/' + func + '?access_token=bf21dd7226278a6c5d3c5f16cb2db00590fc81e7';
 
   //Note that the server response object is like the following example:
   // {
