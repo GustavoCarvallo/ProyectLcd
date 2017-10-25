@@ -76,6 +76,7 @@ function turnOnLight1() {
         Materialize.toast("An error occurred, please try later.", 5000);
       }
       else{
+        logEvent("Light 1 turned on.");
         loadAllButtonsLights();
       }
   })
@@ -93,6 +94,7 @@ function turnOffLight1() {
         Materialize.toast("An error occurred, please try later.", 5000);
       }
       else{
+        logEvent("Light 1 turned off.");
         loadAllButtonsLights();
       }
   })
@@ -110,6 +112,7 @@ function turnOnLight2() {
         Materialize.toast("An error occurred, please try later.", 5000);
       }
       else{
+        logEvent("Light 2 turned on.");
         loadAllButtonsLights();
       }
   })
@@ -127,6 +130,7 @@ function turnOffLight2() {
         Materialize.toast("An error occurred, please try later.", 5000);
       }
       else{
+        logEvent("Light 2 turned off.");
         loadAllButtonsLights();
       }
   })
@@ -145,6 +149,8 @@ function changeLight1Intensity() {
         Materialize.toast("An error occurred, please try later.", 5000);
       }
       else{
+        var eventToLog = "Light 1 has change intensity to: " + intensity;
+        logEvent(eventToLog);
         loadAllButtonsLights();
       }
   })
@@ -163,6 +169,8 @@ function changeLight2Intensity() {
         Materialize.toast("An error occurred, please try later.", 5000);
       }
       else{
+        var eventToLog = "Light 2 has change intensity to: " + intensity;
+        logEvent(eventToLog);
         loadAllButtonsLights();
       }
   })
@@ -177,6 +185,7 @@ function enableLightSensor() {
   .then(function(response){
       console.log("server response: " + response.return_value);
       if(response.return_value == 1){
+        logEvent("Light sensor enabled.");
         document.getElementById("enableLightSensor").disabled = true;
         document.getElementById("disableLightSensor").disabled = false;
       }
@@ -195,6 +204,7 @@ function disableLightSensor() {
   .then(function(response){
       console.log("server response: " + response.return_value);
       if(response.return_value == 2){
+        logEvent("Light sensor disabled.");
         document.getElementById("disableLightSensor").disabled = true;
         document.getElementById("enableLightSensor").disabled = false;
       }
@@ -213,6 +223,7 @@ function enableMovemmentSensor() {
   .then(function(response){
       console.log("server response: " + response.return_value);
       if(response.return_value == 3){
+        logEvent("Movemment sensor enabled.");
         document.getElementById("enableMovemmentSensor").disabled = true;
         document.getElementById("disableMovemmentSensor").disabled = false;
       }
@@ -231,6 +242,7 @@ function disableMovemmentSensor() {
   .then(function(response){
       console.log("server response: " + response.return_value);
       if(response.return_value == 4){
+        logEvent("Movemment sensor disabled.");
         document.getElementById("disableMovemmentSensor").disabled = true;
         document.getElementById("enableMovemmentSensor").disabled = false;
       }
@@ -260,6 +272,7 @@ function activateAlarm(){
   .then(function(response){
       console.log("server response: " + response.return_value);
       if(response.return_value == 5){
+        logEvent("Alarm activate.");
         Materialize.toast("Alarm Activate", 3000, 'green');
         document.getElementById("activateAlarmBtn").disabled = true;
         document.getElementById("desactivateAlarmBtn").disabled = false;
@@ -289,6 +302,7 @@ function desactivateAlarm(){
   .then(function(response){
       console.log("server response: " + response.return_value);
       if(response.return_value == 6){
+        logEvent("Alarm desactivate.");
         Materialize.toast("Alarm Desactivate", 3000, 'green');
         document.getElementById("activateAlarmBtn").disabled = false;
         document.getElementById("desactivateAlarmBtn").disabled = true;
@@ -443,7 +457,6 @@ function loadAllButtonsLights(){
   });
 }
 
-
 // This function is used to load all the current buttons states (active or
 // disabled) of the alarm page.
 function loadAllButtonsAlarm(){
@@ -568,6 +581,7 @@ function turnOnHeat() {
         Materialize.toast("An error occurred, please try later.", 5000);
       }
       else{
+        logEvent("Heat turned on.");
         loadAllClimateButtons();
       }
   })
@@ -585,6 +599,7 @@ function turnOffHeat() {
         Materialize.toast("An error occurred, please try later.", 5000);
       }
       else{
+        logEvent("Heat turned off.");
         loadAllClimateButtons();
       }
   })
@@ -602,6 +617,7 @@ function turnOnCool() {
         Materialize.toast("An error occurred, please try later.", 5000);
       }
       else{
+        logEvent("Cool turned on.");
         loadAllClimateButtons();
       }
   })
@@ -619,6 +635,7 @@ function turnOffCool() {
         Materialize.toast("An error occurred, please try later.", 5000);
       }
       else{
+        logEvent("Cool turned off.");
         loadAllClimateButtons();
       }
   })
@@ -640,6 +657,8 @@ function setAutoClimate() {
           Materialize.toast("Error occurred, temperature must be between 18 and 30 degrees.", 5000);
       }
       else{
+        var eventToLog = "Auto climate turn on and set to: " + temperatureSeleted + " degrees";
+        logEvent(eventToLog);
         loadAllClimateButtons();
       }
   })
@@ -657,6 +676,7 @@ function turnOffAutoClimate() {
         Materialize.toast("An error occurred, please try later.", 5000);
       }
       else{
+        logEvent("Auto climate turned off.");
         loadAllClimateButtons();
       }
   })
@@ -677,4 +697,8 @@ function getVar(varName){
     })
   });
   return promise;
+}
+
+function logEvent(eventToLog) {
+  console.log(eventToLog);
 }
