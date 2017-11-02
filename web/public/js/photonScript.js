@@ -700,5 +700,21 @@ function getVar(varName){
 }
 
 function logEvent(eventToLog) {
-  console.log(eventToLog);
+  var postUrl = "http://192.168.0.5:8081/log"; //Home ip.
+  //var postUrl = "http://192.168.2.25:8081/log"; //Raspberry pi ip.
+
+  //Object which will be send to the server.
+  var obj = {"event" : eventToLog, "date" : new Date().toString()};
+
+  var response = $.ajax({
+    url: postUrl,
+    type: 'POST',
+    contentType: "application/json",
+    data: JSON.stringify(obj),
+    success: function(data) {
+    },
+    error: function(data) {
+      console.log("Problems when logging events!");
+    }
+  });
 }
