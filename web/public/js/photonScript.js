@@ -719,7 +719,7 @@ function logEvent(eventToLog) {
   });
 }
 
-function getEvents(){
+function getLogs(){
   var postUrl = 'http://192.168.2.25:8081/log';
 
   var response = $.ajax({
