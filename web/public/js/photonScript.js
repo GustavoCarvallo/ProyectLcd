@@ -718,3 +718,29 @@ function logEvent(eventToLog) {
     }
   });
 }
+
+function getEvents(){
+  var postUrl = 'http://192.168.2.25:8081/log';
+
+  var response = $.ajax({
+    url: postUrl,
+    type: 'get',
+    success: function(data) {
+      //There are at least 1 log.
+      if (data.length > 0) {
+        for (var i = 0; i < data.length; i++) {
+          var jsonLog = data[i];
+          document.getElementById("logCard").innerHTML += `\n <h4>Event: ${jsonLog.event} Date: ${jsonLog.date}<h4>`;
+        }
+      }
+      //There are no logs.
+      else {
+          document.getElementById("logCard").innerHTML += `\n <h4>The are no logs!<h4>`;
+      }
+
+    },
+    error: function(data) {
+      console.log("Server Error: Fail to obtain the logs.");
+    }
+  });
+}
