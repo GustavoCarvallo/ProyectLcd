@@ -730,12 +730,21 @@ function getLogs(){
       if (data.length > 0) {
         for (var i = 0; i < data.length; i++) {
           var jsonLog = data[i];
-          document.getElementById("log_panel").innerHTML += `\n <h4>Event: ${jsonLog.event} Date: ${jsonLog.date}<h4>`;
+         // document.getElementById("log_panel").innerHTML += `\n <h3>Event: ${jsonLog.event} Date: ${jsonLog.date}<h3>`;
+            document.getElementById("log_panel").innerHTML += `\n <div class="card-content" style='margin-left: 20%'>
+              <p>Event: ${jsonLog.event}  Date: ${jsonLog.date} </p>
+            </div>`;
         }
       }
       //There are no logs.
       else {
-          document.getElementById("log_panel").innerHTML += `\n <h4>The are no logs!<h4>`;
+          //<div class="card-content">
+      //<p>I am a very simple card. I am good at containing small bits of information.
+      //        I am convenient because I require little markup to use effectively.</p>
+      //    </div>
+          document.getElementById("log_panel").innerHTML += `\n <div class="card-content style='margin-left: 50%'">
+              <p>No logs</p>
+            </div>`;
       }
 
     },

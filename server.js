@@ -22,7 +22,7 @@ var server = app.listen(8081, function () {
 })
 
 app.post('/log', function(req, res){
-  var logEvent;
+    var logEvent;
   req.on('data', function (data) {
     logEvent = JSON.parse(data.toString());
     log[logCurrentIndex] = logEvent;
