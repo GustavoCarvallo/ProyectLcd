@@ -730,12 +730,12 @@ function getLogs(){
       if (data.length > 0) {
         for (var i = 0; i < data.length; i++) {
           var jsonLog = data[i];
-          document.getElementById("logCard").innerHTML += `\n <h4>Event: ${jsonLog.event} Date: ${jsonLog.date}<h4>`;
+          document.getElementById("log_panel").innerHTML += `\n <h4>Event: ${jsonLog.event} Date: ${jsonLog.date}<h4>`;
         }
       }
       //There are no logs.
       else {
-          document.getElementById("logCard").innerHTML += `\n <h4>The are no logs!<h4>`;
+          document.getElementById("log_panel").innerHTML += `\n <h4>The are no logs!<h4>`;
       }
 
     },
