@@ -69,6 +69,7 @@ function getFromServer(variableName){
 
 function turnOnLight1() {
   var func = "light";
+    //logEvent("Light 1 turned on.");
   postToServer(func, "LIGHT-1-TURNON")
   .then(function(response){
       console.log("server response: " + response.return_value);
@@ -701,7 +702,8 @@ function getVar(varName){
 
 function logEvent(eventToLog) {
   //var postUrl = "http://192.168.0.5:8081/log"; //Home ip.
-  var postUrl = "http://192.168.2.25:8081/log"; //Raspberry pi ip.
+ var postUrl = "http://192.168.2.25:8081/log"; //Raspberry pi ip.
+  //  var postUrl = "http://localhost:8081/log";
 
   //Object which will be send to the server.
   var obj = {"event" : eventToLog, "date" : new Date().toString()};
@@ -720,8 +722,8 @@ function logEvent(eventToLog) {
 }
 
 function getLogs(){
-  var postUrl = 'http://192.168.2.25:8081/log';
-
+ var postUrl = 'http://192.168.2.25:8081/log';
+    //var postUrl = 'http://localhost:8081/log';
   var response = $.ajax({
     url: postUrl,
     type: 'get',
