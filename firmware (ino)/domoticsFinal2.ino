@@ -52,6 +52,9 @@ int arduinoComVal;
 //temperature sensor variables.
 double temperature;
 const int tempSensorPin = A4;
+double const fixTemp = 25.5;
+double const fixValue = 2867;
+double const fixDegreeValue = 22.74;
 
 //Climate control variables.
 const int fanPin = 4;
@@ -407,8 +410,25 @@ void checkAlarm(){
 }
 
 void checkTemp(){
-  //4,6 is the readed voltage from the particle photon.
-  temperature = (analogRead (tempSensorPin) * (4.6 / 1023.0));
+
+    int value = analogRead(tempSensorPin);
+    double aux;
+
+  //The temperature is cold.
+  if(value < fixValue){
+    aux = value - fixValue;
+    aux = aux / fixDegreeValue;
+    temperature = fixTemp - aux;
+  }
+  //The temperature is hot.
+  else if(value > fixValue){
+    aux = fixValue - value;
+    aux = aux / fixDegreeValue;
+    temperature = fixTemp + aux;
+  }
+  else if(value == fixValue){
+    temperature = fixTemp;
+  }
 }
 
 //This method returns an specific variable ask.
