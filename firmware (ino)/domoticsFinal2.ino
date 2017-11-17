@@ -308,6 +308,9 @@ int setVariables(String command){
     }
     else if(command == "ENABLELIGHTSENSOR-FALSE"){
         enablePhotoresistor = FALSE;
+        //Turn off the outdoor light when dissable the photoresistor.
+        analogWrite(light1Pin, 0);
+        currentlight1Intensity = 0;
         return 2;
     }
     else if(command == "ENABLEMOVEMENTSENSOR-TRUE"){
@@ -316,6 +319,9 @@ int setVariables(String command){
     }
      else if(command == "ENABLEMOVEMENTSENSOR-FALSE"){
         enableMovementSensorToTurnLights = FALSE;
+        //Turn off the indoor light when dissable the movemment sensor.
+        analogWrite(light2Pin, 0);
+        currentlight2Intensity = 0;
         return 4;
     }
     else if(command.substring(0,16) == "ALARMACTIVE-TRUE"){
