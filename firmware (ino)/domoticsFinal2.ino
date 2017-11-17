@@ -62,9 +62,11 @@ bool autoClimateControlOn;
 bool heatingOn;
 bool fanOn;
 int autoClimateControlTemperature;
+unsigned long lastTimeCheked;
+int climateControlInterval = 5000; //Milliseconds.
 
 //Reley variables.
-int const relayPin = 7;
+int const relayHeatingPin = 7;
 
 void setup() {
     //Set lights as output
@@ -90,7 +92,7 @@ void setup() {
     pinMode(tempSensorPin, INPUT);
 
     //Set relay module as output.
-    pinMode(relayPin, OUTPUT);
+    pinMode(relayHeatingPin, OUTPUT);
 
     //Set some function and variables.
     Particle.function("light", lightCommands);
@@ -135,6 +137,7 @@ void loop() {
     checkAlarmActivationOrDesactivation();
     checkExteriorLightIntensity();
     checkAlarm();
+    checkClimateControl();
     //checkTemp();
 }
 
@@ -225,25 +228,40 @@ int climateControlCommands(String command){
           if(tempSelected >= 18 && tempSelected <= 30){
             autoClimateControlTemperature = tempSelected;
             autoClimateControlOn = true;
+
+            //Ensure that all is off before starting the climate control.
+            digitalWrite(relayHeatingPin, LOW);
+            heatingOn = false;
+            digitalWrite(fanPin, LOW);
+            fanOn = false;
+            lastTimeCheked = 0;
+
             return 1;
           }
         }
         return -2;
       }
       else if(command.substring(19,22) == "OFF"){
+        //Turn off all the climate control.
         autoClimateControlOn = false;
+        digitalWrite(relayHeatingPin, LOW);
+        heatingOn = false;
+        digitalWrite(fanPin, LOW);
+        fanOn = false;
+        lastTimeCheked = 0;
+
         return 2;
       }
     }
     else if(command.substring(0,7) == "HEATING"){
       if(command.substring(8,14) == "TURNON"){
         heatingOn = true;
-        digitalWrite(relayPin, HIGH);
+        digitalWrite(relayHeatingPin, HIGH);
         return 3;
       }
       else if(command.substring(8,15) == "TURNOFF"){
         heatingOn = false;
-        digitalWrite(relayPin, LOW);
+        digitalWrite(relayHeatingPin, LOW);
         return 4;
       }
     }
@@ -551,5 +569,66 @@ void setLightIntensity(int lightNumber,int intensity){
     break;
     case 2: currentlight2Intensity = intensity;
     break;
+  }
+}
+
+void checkClimateControl(){
+  //If the autoclimate control is on.
+  if (autoClimateControlOn) {
+
+    //If it is the first time.
+    if(lastTimeCheked == 0){
+      lastTimeCheked = millis();
+    }
+
+    //If it is not the first time.
+    else{
+      //Has been 5 seconds since the last check.
+      if((lastTimeCheked + climateControlInterval) < millis()){
+          checkTemp();
+
+          //If the temperature is above the temperature seted plus 1.
+          if(((int)temperature) > (autoClimateControlTemperature + 1)){
+            //Ensure the heat is turn off.
+            digitalWrite(relayHeatingPin, LOW);
+            heatingOn = false;
+
+            //If the fan is off.
+            if(!fanOn){
+              //Turn on the fan.
+              digitalWrite(fanPin, HIGH);
+              fanOn = true;
+            }
+          }
+          //If the temperature is below the temperature seted minus 1.
+          else if(((int)temperature) < (autoClimateControlTemperature - 1)){
+            //Ensure the fan is turn off.
+            digitalWrite(fanPin, LOW);
+            fanOn = false;
+
+            //If the heating is off.
+            if(!heatingOn){
+              //Turn on the heating.
+              digitalWrite(relayHeatingPin, HIGH);
+              heatingOn = true;
+            }
+
+          }
+          //The temperature is between the accepted temperature.
+          else{
+            //Ensure the heat is turn off.
+            digitalWrite(relayHeatingPin, LOW);
+            heatingOn = false;
+
+            //Ensure the fan is turn off.
+            digitalWrite(fanPin, LOW);
+            fanOn = false;
+
+          }
+
+          lastTimeCheked = millis();
+      }
+    }
+
   }
 }
