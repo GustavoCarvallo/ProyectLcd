@@ -73,7 +73,7 @@ function turnOnLight1() {
   .then(function(response){
       console.log("server response: " + response.return_value);
       if(response.return_value == -1){
-        Materialize.toast("An error occurred, please try later.", 5000);
+        Materialize.toast("An error occurred, please try later.", 5000, 'red');
       }
       else{
         logEvent("Light 1 turned on.");
@@ -81,7 +81,7 @@ function turnOnLight1() {
       }
   })
   .catch(function(error){
-      Materialize.toast("An error occurred, please try later.", 5000);
+      Materialize.toast("An error occurred, please try later.", 5000, 'red');
   });
 }
 
@@ -91,7 +91,7 @@ function turnOffLight1() {
   .then(function(response){
       console.log("server response: " + response.return_value);
       if(response.return_value == -1){
-        Materialize.toast("An error occurred, please try later.", 5000);
+        Materialize.toast("An error occurred, please try later.", 5000, 'red');
       }
       else{
         logEvent("Light 1 turned off.");
@@ -99,7 +99,7 @@ function turnOffLight1() {
       }
   })
   .catch(function(error){
-      Materialize.toast("An error occurred, please try later.", 5000);
+      Materialize.toast("An error occurred, please try later.", 5000, 'red');
   });
 }
 
@@ -109,7 +109,7 @@ function turnOnLight2() {
   .then(function(response){
       console.log("server response: " + response.return_value);
       if(response.return_value == -1){
-        Materialize.toast("An error occurred, please try later.", 5000);
+        Materialize.toast("An error occurred, please try later.", 5000, 'red');
       }
       else{
         logEvent("Light 2 turned on.");
@@ -117,7 +117,7 @@ function turnOnLight2() {
       }
   })
   .catch(function(error){
-      Materialize.toast("An error occurred, please try later.", 5000);
+      Materialize.toast("An error occurred, please try later.", 5000, 'red');
   });
 }
 
@@ -127,7 +127,7 @@ function turnOffLight2() {
   .then(function(response){
       console.log("server response: " + response.return_value);
       if(response.return_value == -1){
-        Materialize.toast("An error occurred, please try later.", 5000);
+        Materialize.toast("An error occurred, please try later.", 5000, 'red');
       }
       else{
         logEvent("Light 2 turned off.");
@@ -135,7 +135,7 @@ function turnOffLight2() {
       }
   })
   .catch(function(error){
-      Materialize.toast("An error occurred, please try later.", 5000);
+      Materialize.toast("An error occurred, please try later.", 5000, 'red');
   });
 }
 
@@ -146,7 +146,7 @@ function changeLight1Intensity() {
   .then(function(response){
       console.log("server response: " + response.return_value);
       if(response.return_value == -1){
-        Materialize.toast("An error occurred, please try later.", 5000);
+        Materialize.toast("An error occurred, please try later.", 5000, 'red');
       }
       else{
         var eventToLog = "Light 1 has change intensity to: " + intensity;
@@ -155,7 +155,7 @@ function changeLight1Intensity() {
       }
   })
   .catch(function(error){
-      Materialize.toast("An error occurred, please try later.", 5000);
+      Materialize.toast("An error occurred, please try later.", 5000, 'red');
   });
 }
 
@@ -166,7 +166,7 @@ function changeLight2Intensity() {
   .then(function(response){
       console.log("server response: " + response.return_value);
       if(response.return_value == -1){
-        Materialize.toast("An error occurred, please try later.", 5000);
+        Materialize.toast("An error occurred, please try later.", 5000, 'red');
       }
       else{
         var eventToLog = "Light 2 has change intensity to: " + intensity;
@@ -175,7 +175,7 @@ function changeLight2Intensity() {
       }
   })
   .catch(function(error){
-      Materialize.toast("An error occurred, please try later.", 5000);
+      Materialize.toast("An error occurred, please try later.", 5000, 'red');
   });
 }
 
@@ -190,11 +190,11 @@ function enableLightSensor() {
         document.getElementById("disableLightSensor").disabled = false;
       }
       else{
-        Materialize.toast("An error occurred, please try later.", 5000);
+        Materialize.toast("An error occurred, please try later.", 5000, 'red');
       }
   })
   .catch(function(error){
-      Materialize.toast("An error occurred, please try later.", 5000);
+      Materialize.toast("An error occurred, please try later.", 5000, 'red');
   });
 }
 
@@ -210,11 +210,11 @@ function disableLightSensor() {
         loadAllButtonsLights();
       }
       else{
-        Materialize.toast("An error occurred, please try later.", 5000);
+        Materialize.toast("An error occurred, please try later.", 5000, 'red');
       }
   })
   .catch(function(error){
-      Materialize.toast("An error occurred, please try later.", 5000);
+      Materialize.toast("An error occurred, please try later.", 5000, 'red');
   });
 }
 
@@ -229,11 +229,11 @@ function enableMovemmentSensor() {
         document.getElementById("disableMovemmentSensor").disabled = false;
       }
       else{
-        Materialize.toast("An error occurred, please try later.", 5000);
+        Materialize.toast("An error occurred, please try later.", 5000, 'red');
       }
   })
   .catch(function(error){
-      Materialize.toast("An error occurred, please try later.", 5000);
+      Materialize.toast("An error occurred, please try later.", 5000, 'red');
   });
 }
 
@@ -249,11 +249,11 @@ function disableMovemmentSensor() {
         loadAllButtonsLights();
       }
       else{
-        Materialize.toast("An error occurred, please try later.", 5000);
+        Materialize.toast("An error occurred, please try later.", 5000, 'red');
       }
   })
   .catch(function(error){
-      Materialize.toast("An error occurred, please try later.", 5000);
+      Materialize.toast("An error occurred, please try later.", 5000, 'red');
   });
 }
 
@@ -287,11 +287,11 @@ function activateAlarm(){
         document.getElementById("inputPasswordActivate").value = "";
       }
       else{
-        Materialize.toast("An error occurred, please try later.", 5000);
+        Materialize.toast("An error occurred, please try later.", 5000, 'red');
       }
   })
   .catch(function(error){
-      Materialize.toast("An error occurred, please try later.", 5000);
+      Materialize.toast("An error occurred, please try later.", 5000, 'red');
   });
 
 }
@@ -317,11 +317,11 @@ function desactivateAlarm(){
         document.getElementById("inputPasswordDesactivate").value = "";
       }
       else{
-        Materialize.toast("An error occurred, please try later.", 5000);
+        Materialize.toast("An error occurred, please try later.", 5000, 'red');
       }
   })
   .catch(function(error){
-      Materialize.toast("An error occurred, please try later.", 5000);
+      Materialize.toast("An error occurred, please try later.", 5000, 'red');
   });
 
 }
@@ -341,10 +341,10 @@ function checkStatus(){
     }
     else {
       console.log("Wrong command when asking for a var at getVar()");
-      Materialize.toast("An error occurred on the server, please try later.", 5000);
+      Materialize.toast("An error occurred on the server, please try later.", 5000, 'red');
     }
   }, function(error){
-    Materialize.toast("An error occurred on the server, please try later.", 5000);
+    Materialize.toast("An error occurred on the server, please try later.", 5000, 'red');
   });
 }
 
@@ -387,10 +387,10 @@ function loadAllButtonsLights(){
     }
     else {
       console.log("Wrong command when asking for a var at getVar()");
-      Materialize.toast("An error occurred on the server, please try later.", 5000);
+      Materialize.toast("An error occurred on the server, please try later.", 5000, 'red');
     }
   }, function(error){
-    Materialize.toast("An error occurred on the server, please try later.", 5000);
+    Materialize.toast("An error occurred on the server, please try later.", 5000, 'red');
   });
 
   // Load the buttons related with the Light 2.
@@ -409,10 +409,10 @@ function loadAllButtonsLights(){
     }
     else {
       console.log("Wrong command when asking for a var at getVar()");
-      Materialize.toast("An error occurred on the server, please try later.", 5000);
+      Materialize.toast("An error occurred on the server, please try later.", 5000, 'red');
     }
   }, function(error){
-    Materialize.toast("An error occurred on the server, please try later.", 5000);
+    Materialize.toast("An error occurred on the server, please try later.", 5000, 'red');
   });
 
 
@@ -431,10 +431,10 @@ function loadAllButtonsLights(){
     }
     else {
       console.log("Wrong command when asking for a var at getVar()");
-      Materialize.toast("An error occurred on the server, please try later.", 5000);
+      Materialize.toast("An error occurred on the server, please try later.", 5000, 'red');
     }
   }, function(error){
-    Materialize.toast("An error occurred on the server, please try later.", 5000);
+    Materialize.toast("An error occurred on the server, please try later.", 5000, 'red');
   });
 
   // Load the buttons related with the movemmentSensor.
@@ -452,10 +452,10 @@ function loadAllButtonsLights(){
     }
     else {
       console.log("Wrong command when asking for a var at getVar()");
-      Materialize.toast("An error occurred on the server, please try later.", 5000);
+      Materialize.toast("An error occurred on the server, please try later.", 5000, 'red');
     }
   }, function(error){
-    Materialize.toast("An error occurred on the server, please try later.", 5000);
+    Materialize.toast("An error occurred on the server, please try later.", 5000, 'red');
   });
 }
 
@@ -479,10 +479,10 @@ function loadAllButtonsAlarm(){
     }
     else {
       console.log("Wrong command when asking for a var at getVar()");
-      Materialize.toast("An error occurred on the server, please try later.", 5000);
+      Materialize.toast("An error occurred on the server, please try later.", 5000, 'red');
     }
   }, function(error){
-    Materialize.toast("An error occurred on the server, please try later.", 5000);
+    Materialize.toast("An error occurred on the server, please try later.", 5000, 'red');
   });
 }
 
@@ -498,10 +498,10 @@ function loadAllClimateButtons() {
     }
     else {
       console.log("Wrong command when asking for a var at getVar()");
-      Materialize.toast("An error occurred on the server, please try later.", 5000);
+      Materialize.toast("An error occurred on the server, please try later.", 5000, 'red');
     }
   }, function(error){
-    Materialize.toast("An error occurred on the server, please try later.", 5000);
+    Materialize.toast("An error occurred on the server, please try later.", 5000, 'red');
   });
 
   getVar("heatingOn").then(function(result){
@@ -515,10 +515,10 @@ function loadAllClimateButtons() {
     }
     else {
       console.log("Wrong command when asking for a var at getVar()");
-      Materialize.toast("An error occurred on the server, please try later.", 5000);
+      Materialize.toast("An error occurred on the server, please try later.", 5000, 'red');
     }
   }, function(error){
-    Materialize.toast("An error occurred on the server, please try later.", 5000);
+    Materialize.toast("An error occurred on the server, please try later.", 5000, 'red');
   });
 
   getVar("autoClimateControlOn").then(function(result){
@@ -539,19 +539,19 @@ function loadAllClimateButtons() {
         }
         else {
           console.log("Wrong command when asking for a var at getVar()");
-          Materialize.toast("An error occurred on the server, please try later.", 5000);
+          Materialize.toast("An error occurred on the server, please try later.", 5000, 'red');
         }
       }, function(error){
         console.log("Wrong command when asking for a var at getVar()");
-        Materialize.toast("An error occurred on the server, please try later.", 5000);
+        Materialize.toast("An error occurred on the server, please try later.", 5000, 'red');
       });
     }
     else {
       console.log("Wrong command when asking for a var at getVar()");
-      Materialize.toast("An error occurred on the server, please try later.", 5000);
+      Materialize.toast("An error occurred on the server, please try later.", 5000, 'red');
     }
   }, function(error){
-    Materialize.toast("An error occurred on the server, please try later.", 5000);
+    Materialize.toast("An error occurred on the server, please try later.", 5000, 'red');
   });
 
   checkTemperature();
@@ -567,10 +567,10 @@ function checkTemperature() {
     }
     else {
       console.log("Wrong command when asking for a var at getVar()");
-      Materialize.toast("An error occurred on the server, please try later.", 5000);
+      Materialize.toast("An error occurred on the server, please try later.", 5000, 'red');
     }
   }, function(error){
-    Materialize.toast("An error occurred on the server, please try later.", 5000);
+    Materialize.toast("An error occurred on the server, please try later.", 5000, 'red');
   });
 }
 
@@ -580,7 +580,7 @@ function turnOnHeat() {
   .then(function(response){
       console.log("server response: " + response.return_value);
       if(response.return_value == -1){
-        Materialize.toast("An error occurred, please try later.", 5000);
+        Materialize.toast("An error occurred, please try later.", 5000, 'red');
       }
       else{
         logEvent("Heat turned on.");
@@ -588,7 +588,7 @@ function turnOnHeat() {
       }
   })
   .catch(function(error){
-      Materialize.toast("An error occurred, please try later.", 5000);
+      Materialize.toast("An error occurred, please try later.", 5000, 'red');
   });
 }
 
@@ -598,7 +598,7 @@ function turnOffHeat() {
   .then(function(response){
       console.log("server response: " + response.return_value);
       if(response.return_value == -1){
-        Materialize.toast("An error occurred, please try later.", 5000);
+        Materialize.toast("An error occurred, please try later.", 5000, 'red');
       }
       else{
         logEvent("Heat turned off.");
@@ -606,7 +606,7 @@ function turnOffHeat() {
       }
   })
   .catch(function(error){
-      Materialize.toast("An error occurred, please try later.", 5000);
+      Materialize.toast("An error occurred, please try later.", 5000, 'red');
   });
 }
 
@@ -616,7 +616,7 @@ function turnOnCool() {
   .then(function(response){
       console.log("server response: " + response.return_value);
       if(response.return_value == -1){
-        Materialize.toast("An error occurred, please try later.", 5000);
+        Materialize.toast("An error occurred, please try later.", 5000, 'red');
       }
       else{
         logEvent("Cool turned on.");
@@ -624,7 +624,7 @@ function turnOnCool() {
       }
   })
   .catch(function(error){
-      Materialize.toast("An error occurred, please try later.", 5000);
+      Materialize.toast("An error occurred, please try later.", 5000, 'red');
   });
 }
 
@@ -634,7 +634,7 @@ function turnOffCool() {
   .then(function(response){
       console.log("server response: " + response.return_value);
       if(response.return_value == -1){
-        Materialize.toast("An error occurred, please try later.", 5000);
+        Materialize.toast("An error occurred, please try later.", 5000, 'red');
       }
       else{
         logEvent("Cool turned off.");
@@ -642,7 +642,7 @@ function turnOffCool() {
       }
   })
   .catch(function(error){
-      Materialize.toast("An error occurred, please try later.", 5000);
+      Materialize.toast("An error occurred, please try later.", 5000, 'red');
   });
 }
 
@@ -653,10 +653,10 @@ function setAutoClimate() {
   .then(function(response){
       console.log("server response: " + response.return_value);
       if(response.return_value == -1){
-        Materialize.toast("An error occurred, please try later.", 5000);
+        Materialize.toast("An error occurred, please try later.", 5000, 'red');
       }
       else if(response.return_value == -2){
-          Materialize.toast("Error occurred, temperature must be between 18 and 30 degrees.", 5000);
+          Materialize.toast("Error occurred, temperature must be between 18 and 30 degrees.", 5000, 'red');
       }
       else{
         var eventToLog = "Auto climate turn on and set to: " + temperatureSeleted + " degrees";
@@ -665,7 +665,7 @@ function setAutoClimate() {
       }
   })
   .catch(function(error){
-      Materialize.toast("An error occurred, please try later.", 5000);
+      Materialize.toast("An error occurred, please try later.", 5000, 'red');
   });
 }
 
@@ -675,7 +675,7 @@ function turnOffAutoClimate() {
   .then(function(response){
       console.log("server response: " + response.return_value);
       if(response.return_value == -1){
-        Materialize.toast("An error occurred, please try later.", 5000);
+        Materialize.toast("An error occurred, please try later.", 5000, 'red');
       }
       else{
         logEvent("Auto climate turned off.");
@@ -683,7 +683,7 @@ function turnOffAutoClimate() {
       }
   })
   .catch(function(error){
-      Materialize.toast("An error occurred, please try later.", 5000);
+      Materialize.toast("An error occurred, please try later.", 5000, 'red');
   });
 }
 
