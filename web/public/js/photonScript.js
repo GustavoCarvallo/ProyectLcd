@@ -755,3 +755,33 @@ function getLogs(){
     }
   });
 }
+
+function downloadLogFile() {
+  var postUrl = 'http://192.168.2.25:8081/download';
+
+  var response = $.ajax({
+    url: postUrl,
+    type: 'get',
+    success: function(data) {
+      // Start file download.
+      download("log.txt", data);
+    },
+    error: function(data) {
+      Materialize.toast("An error occurred, please try later.", 5000, 'red');
+      console.log("Server Error: Fail to download the log file");
+    }
+  });
+}
+
+function download(filename, text) {
+  var element = document.createElement('a');
+  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+  element.setAttribute('download', filename);
+
+  element.style.display = 'none';
+  document.body.appendChild(element);
+
+  element.click();
+
+  document.body.removeChild(element);
+}

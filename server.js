@@ -36,6 +36,6 @@ app.get('/log', function(req, res){
 })
 
 app.get('/download', function(req, res){
-  var file = __dirname + 'log.txt';
+  var file = 'log.txt';
   res.download(file); // Set disposition and send it.
 });
