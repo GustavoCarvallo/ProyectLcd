@@ -207,6 +207,7 @@ function disableLightSensor() {
         logEvent("Light sensor disabled.");
         document.getElementById("disableLightSensor").disabled = true;
         document.getElementById("enableLightSensor").disabled = false;
+        loadAllButtonsLights();
       }
       else{
         Materialize.toast("An error occurred, please try later.", 5000);
@@ -245,6 +246,7 @@ function disableMovemmentSensor() {
         logEvent("Movemment sensor disabled.");
         document.getElementById("disableMovemmentSensor").disabled = true;
         document.getElementById("enableMovemmentSensor").disabled = false;
+        loadAllButtonsLights();
       }
       else{
         Materialize.toast("An error occurred, please try later.", 5000);
