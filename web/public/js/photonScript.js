@@ -486,6 +486,8 @@ function loadAllButtonsAlarm(){
   });
 }
 
+// This function is used to load all the current buttons states (active or
+// disabled) of the climate page.
 function loadAllClimateButtons() {
   getVar("fanOn").then(function(result){
     if(result == 0){
@@ -702,7 +704,7 @@ function getVar(varName){
 }
 
 function logEvent(eventToLog) {
-  //var postUrl = "http://192.168.0.5:8081/log"; //Home ip.
+  //var postUrl = "http://localhost:8081/log"; //To test in the same computer.
   var postUrl = "http://192.168.2.25:8081/log"; //Raspberry pi ip.
 
   //Object which will be send to the server.
@@ -722,7 +724,11 @@ function logEvent(eventToLog) {
 }
 
 function getLogs(){
-  var postUrl = 'http://192.168.2.25:8081/log';
+  //Disable download button until the logs have been loaded succesfully.
+  document.getElementById("downloadButton").disabled = true;
+
+  var postUrl = 'http://192.168.2.25:8081/log'; //Raspberry pi ip.
+  //var postUrl = 'http://localhost:8081/log'; //To test in the same computer.
 
   var response = $.ajax({
     url: postUrl,
@@ -732,32 +738,40 @@ function getLogs(){
       if (data.length > 0) {
         for (var i = 0; i < data.length; i++) {
           var jsonLog = data[i];
-         // document.getElementById("log_panel").innerHTML += `\n <h3>Event: ${jsonLog.event} Date: ${jsonLog.date}<h3>`;
-            document.getElementById("log_panel").innerHTML += `\n <div class="card-content" style='margin-left: 20%'>
-              <p>Event: ${jsonLog.event}  Date: ${jsonLog.date} </p>
-            </div>`;
+            document.getElementById("log_panel").innerHTML += `\n
+              <div class="card-content" style='margin-left: 20%'>
+                <p>Event: ${jsonLog.event}  Date: ${jsonLog.date} </p>
+              </div>`;
         }
+
+        //Enable download button.
+        document.getElementById("downloadButton").disabled = false;
+
       }
       //There are no logs.
       else {
-          //<div class="card-content">
-      //<p>I am a very simple card. I am good at containing small bits of information.
-      //        I am convenient because I require little markup to use effectively.</p>
-      //    </div>
-          document.getElementById("log_panel").innerHTML += `\n <div class="card-content style='margin-left: 50%'">
-              <p>No logs</p>
+          document.getElementById("log_panel").innerHTML += `\n
+            <div class="card-content style='margin-left: 50%'">
+                <p>No logs</p>
             </div>`;
+
+            //Disable download button.
+            document.getElementById("downloadButton").disabled = true;
       }
 
     },
     error: function(data) {
       console.log("Server Error: Fail to obtain the logs.");
+
+      //Disable download button.
+      document.getElementById("downloadButton").disabled = true;
     }
   });
 }
 
 function downloadLogFile() {
-  var postUrl = 'http://192.168.2.25:8081/download';
+  var postUrl = 'http://192.168.2.25:8081/download'; //Raspberry pi ip.
+  //var postUrl = 'http://localhost:8081/download'; //To test in the same computer.
 
   var response = $.ajax({
     url: postUrl,
