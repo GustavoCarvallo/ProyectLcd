@@ -32,14 +32,47 @@
   <div class="row"></div>
 
   <div class="row">
+
+		<!-- Card panel -->
     <div class="col m8 offset-m2">
       <div class="card-panel" id="log_panel">
       </div>
     </div>
+
+		<!-- Buttons -->
 		<div class="col m2">
-			<button type="button" id="downloadButton" class="btn-large waves-effect waves-light" onclick="downloadLogFile()">Download</button>
+
+			<!-- Download button -->
+			<div class="row">
+				<div class="col">
+					<button type="button" id="downloadButton" class="btn-large waves-effect waves-light" onclick="downloadLogFile()">Download</button>
+				</div>
+			</div>
+
+			<!-- Delete logs button, Modal Trigger -->
+			<div class="row">
+				<div class="col">
+					<button type="button" id="deleteLogsButton" class="btn-large waves-effect waves-light" onclick="openDeleteLogModal()">Delete Logs</button>
+				</div>
+			</div>
+
 		</div>
   </div>
+
+	<!-- Modal Structure -->
+	<div id="deleteLog" class="modal">
+		<div class="modal-content">
+			<h4>Are you sure?</h4>
+			<p>This action will delete all the logs. This action CANNOT be undone.
+				 If you still want to delete all the logs, please press 'Confirm'. If
+				 you don't, press 'Cancel'.
+			</p>
+		</div>
+		<div class="modal-footer">
+			<a class="modal-action modal-close waves-effect waves-green btn-flat" onclick="closeDeleteLogModal()">Cancel</a>
+			<a class="modal-action modal-close waves-effect waves-green btn-flat" onclick="deleteAllLogs()">Confirm</a>
+		</div>
+	</div>
 
 </body>
 </html>

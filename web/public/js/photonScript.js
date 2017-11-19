@@ -349,24 +349,6 @@ function checkStatus(){
   });
 }
 
-// function testing(){
-//   var deviceID = "2f0046000547343233323032";
-//   var accessToken = "3f902ab40e940991ae3e3763b00aeb0417b99114";
-//   var eventSource = new EventSource("http://localhost:8080/v1/devices/" + deviceID + "/events/?access_token=" + accessToken);
-//
-//
-//   eventSource.addEventListener('open', function(e) {
-//            console.log("Opened!"); },false);
-//
-//   eventSource.addEventListener('error', function(e) {
-//            console.log("Errored!"); },false);
-//
-//   eventSource.addEventListener('event', function(e) {
-//     console.log("Enter!!! :->");
-//     var data = JSON.parse(e.data);
-//     console.log("Core Id: " + data.coreid);
-//   },false);
-// }
 
 // This function is used to load all the current buttons states (active or
 // disabled) of the light page.
@@ -705,8 +687,8 @@ function getVar(varName){
 }
 
 function logEvent(eventToLog) {
-  //var postUrl = "http://localhost:8081/log"; //To test in the same computer.
   var postUrl = "http://192.168.2.25:8081/log"; //Raspberry pi ip.
+  //var postUrl = "http://localhost:8081/log"; //To test in the same computer.
 
   //Object which will be send to the server.
   var obj = {"event" : eventToLog, "date" : new Date().toString()};
@@ -727,9 +709,13 @@ function logEvent(eventToLog) {
 function getLogs(){
   //Disable download button until the logs have been loaded succesfully.
   document.getElementById("downloadButton").disabled = true;
+  //Disable delete logs button until the logs have been loaded succesfully.
+  document.getElementById("deleteLogsButton").disabled = true;
 
   var postUrl = 'http://192.168.2.25:8081/log'; //Raspberry pi ip.
   //var postUrl = 'http://localhost:8081/log'; //To test in the same computer.
+
+  document.getElementById("log_panel").innerHTML = ""; //Reset the box where the logs will be shown
 
   var response = $.ajax({
     url: postUrl,
@@ -747,17 +733,21 @@ function getLogs(){
 
         //Enable download button.
         document.getElementById("downloadButton").disabled = false;
+        //Enable delete logs button.
+        document.getElementById("deleteLogsButton").disabled = false;
 
       }
       //There are no logs.
       else {
           document.getElementById("log_panel").innerHTML += `\n
-            <div class="card-content style='margin-left: 50%'">
+            <div class="card-content" style='margin-left: 50%'>
                 <p>No logs</p>
             </div>`;
 
             //Disable download button.
             document.getElementById("downloadButton").disabled = true;
+            //Disable delete logs button.
+            document.getElementById("deleteLogsButton").disabled = true;
       }
 
     },
@@ -779,7 +769,7 @@ function downloadLogFile() {
     type: 'get',
     success: function(data) {
       // Start file download.
-      download("log.txt", data);
+      download("log.json", JSON.stringify(data));
     },
     error: function(data) {
       Materialize.toast("An error occurred, please try later.", 5000, 'red');
@@ -799,4 +789,34 @@ function download(filename, text) {
   element.click();
 
   document.body.removeChild(element);
+}
+
+function deleteAllLogs(){
+  var postUrl = 'http://192.168.2.25:8081/deleteAllLog'; //Raspberry pi ip.
+  //var postUrl = 'http://localhost:8081/deleteAllLog'; //To test in the same computer.
+
+  var response = $.ajax({
+    url: postUrl,
+    type: 'post',
+    success: function() {
+      Materialize.toast("All the logs where delete succesfully.", 5000, 'green');
+      getLogs(); //refresh the logs.
+    },
+    error: function(data) {
+      Materialize.toast("An error occurred, please try later.", 5000, 'red');
+      console.log("Server Error: Fail to delete log file");
+    }
+  });
+}
+
+function openDeleteLogModal() {
+  $('#deleteLog').modal('open');
+}
+
+function closeDeleteLogModal() {
+  $('#deleteLog').modal('close');
+}
+
+function test(){
+  logEvent("the new event appears here!");
 }
