@@ -69,6 +69,7 @@ function getFromServer(variableName){
 
 function turnOnLight1() {
   var func = "light";
+    //logEvent("Light 1 turned on.");
   postToServer(func, "LIGHT-1-TURNON")
   .then(function(response){
       console.log("server response: " + response.return_value);
