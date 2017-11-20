@@ -173,7 +173,7 @@ int lightCommands(String command){
         if(intValue > 9 || intValue < 0){
             return -1;
         }
-        analogWrite(light1Pin, intValue);
+        analogWrite(light1Pin, intValue * 28);
         currentlight1Intensity = intValue;
         return (130 + intValue);
       }
@@ -197,7 +197,7 @@ int lightCommands(String command){
         if(intValue > 9 || intValue < 0){
             return -1;
         }
-        analogWrite(light2Pin, intValue);
+        analogWrite(light2Pin, intValue * 28);
         currentlight2Intensity = intValue;
         return (230 + intValue);
       }
