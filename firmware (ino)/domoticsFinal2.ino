@@ -15,7 +15,7 @@ int lightsUsedByPr = 1;
 
 //Photoresistor variables.
 const int photoresistorPin = A0;
-int minOutdoorIntensity = 2000;
+int minOutdoorIntensity = 1500;
 bool enablePhotoresistor;
 bool lightTurnedOnByPrSensor;
 
