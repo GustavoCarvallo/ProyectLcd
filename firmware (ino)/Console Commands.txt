@@ -6,9 +6,9 @@ curl http://localhost:8080/v1/devices/2f0046000547343233323032/FUNCTIONNAME \-d 
 
 //Spark server on Raspberry Pi (user: raspberrypi@gmail.com)
 //Commands for asking for a variable.
-curl http://192.168.2.2:8080/v1/devices/2f0046000547343233323032/VARNAME?access_token=bf21dd7226278a6c5d3c5f16cb2db00590fc81e7
+curl http://192.168.2.25:8080/v1/devices/2f0046000547343233323032/VARNAME?access_token=bf21dd7226278a6c5d3c5f16cb2db00590fc81e7
 //Commands for asking for a function.
-curl http://192.168.2.2:8080/v1/devics/2f0046000547343233323032/VARNAME \-d access_token=bf21dd7226278a6c5d3c5f16cb2db00590fc81e7 \-d "args=ARGS"
+curl http://192.168.2.25:8080/v1/devics/2f0046000547343233323032/VARNAME \-d access_token=bf21dd7226278a6c5d3c5f16cb2db00590fc81e7 \-d "args=ARGS"
 
 //Note:
 //VARNAME must be replaced with the name of the variable wanted.
